@@ -11,7 +11,6 @@ export const authConfig = {
         async jwt({ token, user }) {
             if (user) {
                 token.id = user.id;
-                // @ts-expect-error - role is dynamically added
                 token.role = user.role;
             }
             return token;
