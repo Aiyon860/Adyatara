@@ -23,8 +23,12 @@ model User {
   password      String?
   image         String?
   role          Role      @default(USER)
+  level         Int       @default(1)
+  totalScore    Int       @default(0)
   accounts      Account[]
   sessions      Session[]
+  gameSessions  GameSession[]
+  userKnowledges UserKnowledge[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
@@ -71,4 +75,124 @@ model VerificationToken {
   updatedAt DateTime @updatedAt
 
   @@unique([identifier, token])
+}
+
+model Story {
+  id          String        @id @default(cuid())
+  title       String
+  region      String
+  description String
+  difficulty  String
+  levelReq    Int           @default(1)
+  
+  // New Visual Novel Fields
+  coverImage             String?
+  backgroundMusicDefault String?
+  themeColor             String?
+
+  nodes       Node[]
+  sessions    GameSession[]
+  knowledges  Knowledge[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Character {
+  id        String   @id @default(cuid())
+  name      String
+  avatar    String?  // default avatar or base character image
+  region    String?
+  
+  nodes     Node[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Node {
+  id       String   @id @default(cuid())
+  storyId  String
+  content  String   @db.Text
+  type     String // "narration" | "choice" | "ending"
+  
+  // New Visual Novel Fields
+  speakerId       String?
+  currentCharacter  Character?  @relation(fields: [speakerId], references: [id])
+  backgroundImage String?
+  backgroundMusic String?
+  soundEffect     String?
+  expression      String?     // e.g., "happy", "angry", "sad", "neutral"
+  position        String?     @default("center") // "left" | "center" | "right"
+  isAutoPlay      Boolean     @default(false)
+  delayMs         Int?
+
+  story    Story    @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  choices  Choice[] @relation("NodeChoices")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Choice {
+  id          String  @id @default(cuid())
+  nodeId      String
+  text        String
+  nextNodeId  String?
+  scoreDelta  Int     @default(0)
+  knowledgeId String?
+
+  // New Visual Novel Fields
+  soundEffect String?
+  isImportant Boolean @default(false)
+
+  node      Node       @relation("NodeChoices", fields: [nodeId], references: [id], onDelete: Cascade)
+  knowledge Knowledge? @relation(fields: [knowledgeId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model GameSession {
+  id            String    @id @default(cuid())
+  userId        String
+  storyId       String
+  currentNodeId String
+  score         Int       @default(0)
+  startedAt     DateTime  @default(now())
+  finishedAt    DateTime?
+  status        String    @default("active") // "active" | "completed"
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  story Story @relation(fields: [storyId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Knowledge {
+  id       String @id @default(cuid())
+  title    String
+  content  String @db.Text
+  category String
+  storyId  String
+
+  story Story    @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  users UserKnowledge[]
+  choices Choice[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserKnowledge {
+  id          String   @id @default(cuid())
+  userId      String
+  knowledgeId String
+  unlockedAt  DateTime @default(now())
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  knowledge Knowledge @relation(fields: [knowledgeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, knowledgeId])
 }

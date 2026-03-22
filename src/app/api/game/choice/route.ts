@@ -1,0 +1,28 @@
+import { auth } from "@/lib/auth";
+import { submitChoice } from "@/lib/game-engine";
+import { NextResponse } from "next/server";
+
+export async function POST(req: Request) {
+  try {
+    const sessionAuth = await auth();
+    const user = sessionAuth?.user;
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const body = await req.json();
+    const { sessionId, choiceId } = body;
+
+    if (!sessionId || !choiceId) {
+      return NextResponse.json(
+        { error: "Missing sessionId or choiceId" },
+        { status: 400 }
+      );
+    }
+
+    const session = await submitChoice(sessionId, choiceId, user.id);
+    return NextResponse.json(session);
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}

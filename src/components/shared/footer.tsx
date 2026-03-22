@@ -1,17 +1,26 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 export function Footer() {
-    const currentYear = new Date().getFullYear();
+    const pathname = usePathname();
+    const hideFooter = pathname?.startsWith("/dashboard") || pathname?.startsWith("/game");
+
+    if (hideFooter) return null;
 
     return (
-        <footer className="border-t bg-background">
-            <div className="container mx-auto flex flex-col items-center justify-between gap-4 px-4 py-6 md:flex-row">
-                <p className="text-sm text-muted-foreground">
-                    &copy; {currentYear}{" "}
-                    <span className="font-semibold">NextBoiler</span>. All rights
-                    reserved.
-                </p>
-                <p className="text-sm text-muted-foreground">
-                    Built with Next.js, Prisma &amp; TypeScript
-                </p>
+        <footer className="bg-[#0A0705] border-t border-gray-800/60 font-sans mt-auto">
+            <div className="container mx-auto px-4 max-w-6xl py-8">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-[9px] tracking-[0.3em] text-gray-500 uppercase">
+                    <div className="font-medium text-white/90">ADYATARA</div>
+                    <div className="text-center">© 2026 ADYATARA • MELESTARIKAN WARISAN BUDAYA INDONESIA</div>
+                    <div className="flex gap-6">
+                        <Link href="#" className="hover:text-white transition-colors">KEBIJAKAN</Link>
+                        <Link href="#" className="hover:text-white transition-colors">PRIVASI</Link>
+                        <Link href="#" className="hover:text-white transition-colors">KONTAK</Link>
+                    </div>
+                </div>
             </div>
         </footer>
     );
