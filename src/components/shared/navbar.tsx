@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useSession, signOut } from "next-auth/react";
-import { LogOut, LayoutDashboard, LogIn, Menu } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useSession } from "next-auth/react";
+import { Menu } from "lucide-react";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 
@@ -16,6 +15,9 @@ export function Navbar() {
 
     if (hideNavbar) return null;
 
+    // Tombol Masuk mengarah ke dashboard jika sudah login, ke signin jika belum
+    const masukHref = session?.user ? "/dashboard" : "/auth/signin";
+
     return (
         <header className="fixed top-0 z-50 w-full backdrop-blur-xs transition-all duration-300">
             <div className="container mx-auto flex h-24 items-center justify-between px-4 max-w-6xl">
@@ -27,55 +29,28 @@ export function Navbar() {
 
                 {/* Desktop Navigation */}
                 <nav className="hidden md:flex items-center gap-12 flex-1 mx-12 justify-center">
-                    {!session?.user && (
-                        <>
-                            <Link href="/" className="text-[#E86B52] hover:text-[#D96B4A] transition-colors text-sm font-semibold tracking-wide">
-                                Home
-                            </Link>
-                            <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm font-light tracking-wide">
-                                Fitur
-                            </a>
-                            <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm font-light tracking-wide">
-                                Karakter
-                            </a>
-                            <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm font-light tracking-wide">
-                                Cerita
-                            </a>
-                        </>
-                    )}
+                    <Link href="/" className="text-[#E86B52] hover:text-[#D96B4A] transition-colors text-sm font-semibold tracking-wide">
+                        Home
+                    </Link>
+                    <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm font-light tracking-wide">
+                        Fitur
+                    </a>
+                    <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm font-light tracking-wide">
+                        Karakter
+                    </a>
+                    <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm font-light tracking-wide">
+                        Cerita
+                    </a>
                 </nav>
 
-                {/* Right Actions */}
+                {/* Right Actions - Tombol Masuk saja */}
                 <div className="flex items-center gap-3">
-                    {session?.user ? (
-                        <>
-                            <Link
-                                href="/dashboard"
-                                className="hidden md:flex items-center text-muted hover:text-primary transition-colors text-sm gap-2"
-                            >
-                                <LayoutDashboard className="h-4 w-4" />
-                                Dashboard
-                            </Link>
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                onClick={() => signOut({ callbackUrl: "/" })}
-                                className="border-border text-foreground hover:border-primary"
-                            >
-                                <LogOut className="mr-2 h-4 w-4" />
-                                Keluar
-                            </Button>
-                        </>
-                    ) : (
-                        <>
-                            <Link
-                                href="/auth/signin"
-                                className="hidden md:flex items-center justify-center px-10 py-2.5 bg-linear-to-b from-[#EAA87E] to-[#D96B4A] text-gray-900 hover:opacity-90 transition-opacity text-sm font-semibold rounded-md shadow-md shadow-[#D96B4A]/20"
-                            >
-                                Masuk
-                            </Link>
-                        </>
-                    )}
+                    <Link
+                        href={masukHref}
+                        className="hidden md:flex items-center justify-center px-10 py-2.5 bg-linear-to-b from-[#EAA87E] to-[#D96B4A] text-gray-900 hover:opacity-90 transition-opacity text-sm font-semibold rounded-md shadow-md shadow-[#D96B4A]/20"
+                    >
+                        Masuk
+                    </Link>
                 </div>
 
                 {/* Mobile Menu Button */}
@@ -90,22 +65,23 @@ export function Navbar() {
             {/* Mobile Menu */}
             {isOpen && (
                 <div className="md:hidden border-t border-border bg-card p-4 space-y-3">
-                    {!session?.user && (
-                        <>
-                            <Link href="/" className="block text-secondary hover:text-primary py-2">
-                                HOME
-                            </Link>
-                            <a href="#" className="block text-muted hover:text-primary py-2">
-                                FITUR
-                            </a>
-                            <a href="#" className="block text-muted hover:text-primary py-2">
-                                KARAKTER
-                            </a>
-                            <a href="#" className="block text-muted hover:text-primary py-2">
-                                CERITA
-                            </a>
-                        </>
-                    )}
+                    <Link href="/" className="block text-secondary hover:text-primary py-2">
+                        HOME
+                    </Link>
+                    <a href="#" className="block text-muted hover:text-primary py-2">
+                        FITUR
+                    </a>
+                    <a href="#" className="block text-muted hover:text-primary py-2">
+                        KARAKTER
+                    </a>
+                    <a href="#" className="block text-muted hover:text-primary py-2">
+                        CERITA
+                    </a>
+                    
+                    {/* Mobile menu - Tombol Masuk */}
+                    <Link href={masukHref} className="block text-primary hover:text-primary py-2 font-semibold">
+                        MASUK
+                    </Link>
                 </div>
             )}
         </header>

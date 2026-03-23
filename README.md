@@ -27,7 +27,16 @@ cd adyatara-ficpatch
 npm install
 ```
 
-**2. Siapkan File Environment `.env`**
+**2. Generate Next.js Documentation**
+Untuk memastikan dokumentasi Next.js yang terkini untuk agen AI, jalankan:
+```bash
+npx @next/codemod@latest agents-md
+```
+Ini akan membuat direktori `.next-docs`.
+
+**Catatan untuk Agen AI**: Setiap kali ingin meminta agen AI mengerjakan sesuai, selalu rujuk ke `AGENTS.md`, `CLAUDE.md`, dan `adyatara-techspec.md` terlebih dahulu sebagai panduan.
+
+**3. Siapkan File Environment `.env`**
 Buat file `.env` dan tambahkan variabel wajib (kamu bisa menggunakan docker/local postgres kamu):
 ```ini
 DATABASE_URL="postgresql://username:password@localhost:5432/adyatara?schema=public"
@@ -35,7 +44,7 @@ NEXTAUTH_SECRET="your-development-secret"
 AUTH_SECRET="your-development-secret"
 ```
 
-**3. Setup Database & Prisma**
+**4. Setup Database & Prisma**
 Setelah memastikan PostgreSQL server sudah berjalan, sinkronkan skema database dan masukkan *dummy story* bawaan:
 ```bash
 npx prisma generate
@@ -43,7 +52,7 @@ npx prisma db push
 npm run prisma:seed  # atau npx prisma db seed
 ```
 
-**4. Jalankan Development Server**
+**5. Jalankan Development Server**
 ```bash
 npm run dev
 ```

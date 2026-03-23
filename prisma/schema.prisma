@@ -22,6 +22,8 @@ model User {
   emailVerified DateTime?
   password      String?
   image         String?
+  bio           String?
+  avatarUrl     String?
   role          Role      @default(USER)
   level         Int       @default(1)
   totalScore    Int       @default(0)
