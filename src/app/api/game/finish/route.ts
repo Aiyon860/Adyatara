@@ -11,38 +11,79 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { sessionId } = body;
+    const { sessionId, storySlug, score, ending } = body;
 
-    const session = await db.gameSession.findUnique({
-      where: { id: sessionId },
-    });
+    // New flow: NarraLeaf-based finish with storySlug + score
+    if (storySlug) {
+      const gameScore = typeof score === "number" && score > 0 ? score : 0;
+      const gameEnding = typeof ending === "string" ? ending : "neutral";
 
-    if (!session || session.userId !== user.id) {
-      return NextResponse.json(
-        { error: "Invalid session or unauthorized" },
-        { status: 403 }
-      );
+      // Try to find Story in DB for GameSession reference
+      const story = await db.story.findFirst({
+        where: { title: { contains: storySlug.replace(/-/g, " "), mode: "insensitive" } },
+      });
+
+      if (story) {
+        await db.gameSession.create({
+          data: {
+            userId: user.id,
+            storyId: story.id,
+            currentNodeId: "completed",
+            score: gameScore,
+            status: "completed",
+            finishedAt: new Date(),
+          },
+        });
+      }
+
+      await db.user.update({
+        where: { id: user.id },
+        data: {
+          totalScore: { increment: gameScore },
+          level: { increment: 1 },
+        },
+      });
+
+      return NextResponse.json({ success: true, score: gameScore, ending: gameEnding });
     }
 
-    if (session.status !== "active") {
+    // Old flow: sessionId-based finish (backward compatibility)
+    if (sessionId) {
+      const session = await db.gameSession.findUnique({
+        where: { id: sessionId },
+      });
+
+      if (!session || session.userId !== user.id) {
         return NextResponse.json(
-            { error: "Session already completed" },
-            { status: 400 }
+          { error: "Invalid session or unauthorized" },
+          { status: 403 }
         );
-    }
+      }
 
-    const updatedSession = await db.gameSession.update({
+      if (session.status !== "active") {
+        return NextResponse.json(
+          { error: "Session already completed" },
+          { status: 400 }
+        );
+      }
+
+      const updatedSession = await db.gameSession.update({
         where: { id: sessionId },
         data: {
-            status: "completed",
-            finishedAt: new Date()
-        }
-    })
+          status: "completed",
+          finishedAt: new Date(),
+        },
+      });
 
-    // Additional cleanup logic or scoring adjustment here if aborted
+      return NextResponse.json(updatedSession);
+    }
 
-    return NextResponse.json(updatedSession);
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { error: "Missing storySlug or sessionId" },
+      { status: 400 }
+    );
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : "Internal error";
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
