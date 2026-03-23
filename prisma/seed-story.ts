@@ -1,7 +1,10 @@
 import { db as prisma } from '../src/lib/db';
 
 async function main() {
-  // 1. STORY
+  // ============================================
+  // STORY 1: LEGENDA TIMUN MAS
+  // ============================================
+
   const story = await prisma.story.create({
     data: {
       title: "Legenda Timun Mas",
@@ -14,36 +17,24 @@ async function main() {
     }
   });
 
-  // 2. CHARACTERS
-  const ibu = await prisma.character.create({
-    data: {
-      name: "Mbok Srini",
-      avatar: "/characters/mbok-srini.png"
-    }
+  // CHARACTERS
+  await prisma.character.create({
+    data: { name: "Mbok Srini", avatar: "/characters/mbok-srini.png" }
   });
 
-  const timunMas = await prisma.character.create({
-    data: {
-      name: "Timun Mas",
-      avatar: "/characters/timun-mas.png"
-    }
+  const timunMasChar = await prisma.character.create({
+    data: { name: "Timun Mas", avatar: "/characters/timun-mas.png" }
   });
 
   const butoIjo = await prisma.character.create({
-    data: {
-      name: "Buto Ijo",
-      avatar: "/characters/buto-ijo.png"
-    }
+    data: { name: "Buto Ijo", avatar: "/characters/buto-ijo.png" }
   });
 
   const narator = await prisma.character.create({
-    data: {
-      name: "Narator",
-      avatar: "/characters/narator.png"
-    }
+    data: { name: "Narator", avatar: "/characters/narator.png" }
   });
 
-  // 3. KNOWLEDGE
+  // KNOWLEDGE
   const k1 = await prisma.knowledge.create({
     data: {
       title: "Asal Usul Timun Mas",
@@ -53,9 +44,7 @@ async function main() {
     }
   });
 
-  // 4. NODES
-
-  // INTRO
+  // NODES
   const intro = await prisma.node.create({
     data: {
       storyId: story.id,
@@ -68,7 +57,6 @@ async function main() {
     }
   });
 
-  // NODE 1
   const node1 = await prisma.node.create({
     data: {
       storyId: story.id,
@@ -90,7 +78,6 @@ async function main() {
     }
   });
 
-  // NODE 2
   const node2 = await prisma.node.create({
     data: {
       storyId: story.id,
@@ -102,7 +89,7 @@ async function main() {
     }
   });
 
-  // NODE 3 (BAD END)
+  // NODE 3 (BAD END - tolak perjanjian)
   const node3 = await prisma.node.create({
     data: {
       storyId: story.id,
@@ -120,7 +107,7 @@ async function main() {
         nodeId: node1.id,
         text: "Terima perjanjian",
         nextNodeId: node2.id,
-        scoreDelta: 10,
+        scoreDelta: 30,
         knowledgeId: k1.id
       },
       {
@@ -132,7 +119,6 @@ async function main() {
     ]
   });
 
-  // NODE 4
   const node4 = await prisma.node.create({
     data: {
       storyId: story.id,
@@ -152,13 +138,13 @@ async function main() {
     }
   });
 
-  // NODE 5 (FINAL)
+  // NODE 5 (BEST END - larilah)
   const node5 = await prisma.node.create({
     data: {
       storyId: story.id,
       content: "Timun Mas melempar biji ajaib yang berubah menjadi lautan lumpur dan menelan Buto Ijo. Kamu selamat!",
       type: "ending",
-      speakerId: timunMas.id,
+      speakerId: timunMasChar.id,
       backgroundImage: "/bg/victory.jpg",
       backgroundMusic: "/audio/bgm-victory.mp3",
       expression: "happy",
@@ -166,16 +152,178 @@ async function main() {
     }
   });
 
-  await prisma.choice.create({
+  // NODE 6 (GOOD END - hadapi Buto Ijo) -- previously missing from DB
+  const node6 = await prisma.node.create({
     data: {
-      nodeId: node4.id,
-      text: "Gunakan benda ajaib",
-      nextNodeId: node5.id,
-      scoreDelta: 50
+      storyId: story.id,
+      content: "Timun Mas menghadapi Buto Ijo langsung dan berhasil mengalahkannya dengan benda ajaib. Kemenangannya menjadi legenda. Tamat.",
+      type: "ending",
+      speakerId: timunMasChar.id,
+      backgroundImage: "/bg/victory.jpg",
+      backgroundMusic: "/audio/bgm-victory.mp3",
+      expression: "happy",
+      position: "center"
     }
   });
 
+  await prisma.choice.createMany({
+    data: [
+      {
+        nodeId: node4.id,
+        text: "Larilah, Timun Mas!",
+        nextNodeId: node5.id,
+        scoreDelta: 30
+      },
+      {
+        nodeId: node4.id,
+        text: "Hadapi Buto Ijo",
+        nextNodeId: node6.id,
+        scoreDelta: 15
+      }
+    ]
+  });
+
   console.log("✅ Timun Mas VN Seed Complete:", story.id);
+
+  // ============================================
+  // STORY 2: LEGENDA CANDI PRAMBANAN
+  // ============================================
+
+  const storyPrambanan = await prisma.story.create({
+    data: {
+      title: "Legenda Candi Prambanan",
+      region: "Jawa Tengah",
+      description: "Kisah cinta dan pengkhianatan Bandung Bondowoso dan Roro Jonggrang.",
+      difficulty: "Pemula",
+      levelReq: 1,
+      coverImage: "/images/jawa-tengah.jpg",
+      backgroundMusicDefault: "/audio/bgm-village.mp3"
+    }
+  });
+
+  // CHARACTERS
+  const naratorPr = await prisma.character.create({
+    data: { name: "Narator", avatar: "/characters/narator.png" }
+  });
+
+  const bandung = await prisma.character.create({
+    data: { name: "Bandung Bondowoso", avatar: "/characters/bandung-bondowoso.png" }
+  });
+
+  const roro = await prisma.character.create({
+    data: { name: "Roro Jonggrang", avatar: "/characters/roro-jonggrang.png" }
+  });
+
+  // NODES
+  const pIntro = await prisma.node.create({
+    data: {
+      storyId: storyPrambanan.id,
+      content: "Di sebuah zaman dahulu kala, terdapat dua kerajaan yang saling bermusuhan, yaitu Pengging dan Boko.",
+      type: "narration",
+      speakerId: naratorPr.id,
+      backgroundImage: "/bg/temple.jpg",
+      backgroundMusic: "/audio/bgm-village.mp3",
+      isAutoPlay: false
+    }
+  });
+
+  const pChoice1 = await prisma.node.create({
+    data: {
+      storyId: storyPrambanan.id,
+      content: "Bandung Bondowoso melihat Roro Jonggrang yang sedang berduka. Apa yang akan dia lakukan?",
+      type: "choice",
+      speakerId: bandung.id,
+      backgroundImage: "/bg/temple.jpg",
+      backgroundMusic: "/audio/bgm-tense.mp3"
+    }
+  });
+
+  await prisma.choice.create({
+    data: { nodeId: pIntro.id, text: "Lanjutkan", nextNodeId: pChoice1.id }
+  });
+
+  const pProposal = await prisma.node.create({
+    data: {
+      storyId: storyPrambanan.id,
+      content: "Bandung Bondowoso melamar Roro Jonggrang dengan sopan. Roro memberi syarat: bangun 1000 candi dalam satu malam.",
+      type: "choice",
+      speakerId: roro.id,
+      backgroundImage: "/bg/temple.jpg",
+      backgroundMusic: "/audio/bgm-happy.mp3"
+    }
+  });
+
+  // BAD END - gunakan kekuatan
+  const pBadEnd = await prisma.node.create({
+    data: {
+      storyId: storyPrambanan.id,
+      content: "Bandung Bondowoso memaksa Roro Jonggrang. Karena amarahnya, ia mengutuk Roro menjadi batu. Tamat.",
+      type: "ending",
+      speakerId: naratorPr.id,
+      backgroundImage: "/bg/sad.jpg",
+      backgroundMusic: "/audio/bgm-sad.mp3"
+    }
+  });
+
+  await prisma.choice.createMany({
+    data: [
+      {
+        nodeId: pChoice1.id,
+        text: "Lamar dia dengan sopan",
+        nextNodeId: pProposal.id,
+        scoreDelta: 30
+      },
+      {
+        nodeId: pChoice1.id,
+        text: "Gunakan kekuatan untuk memaksanya",
+        nextNodeId: pBadEnd.id,
+        scoreDelta: 0
+      }
+    ]
+  });
+
+  // BEST END - terima syarat dan bangun candi
+  const pBestEnd = await prisma.node.create({
+    data: {
+      storyId: storyPrambanan.id,
+      content: "Bandung Bondowoso membangun 999 candi. Roro Jonggrang curang dan dikutuk menjadi candi ke-1000. Tamat.",
+      type: "ending",
+      speakerId: naratorPr.id,
+      backgroundImage: "/bg/victory.jpg",
+      backgroundMusic: "/audio/bgm-victory.mp3"
+    }
+  });
+
+  // NEUTRAL END - tolak syarat
+  const pNeutralEnd = await prisma.node.create({
+    data: {
+      storyId: storyPrambanan.id,
+      content: "Bandung Bondowoso menolak syarat Roro dan meninggalkannya dengan kekecewaan. Tamat.",
+      type: "ending",
+      speakerId: naratorPr.id,
+      backgroundImage: "/bg/sad.jpg",
+      backgroundMusic: "/audio/bgm-sad.mp3"
+    }
+  });
+
+  await prisma.choice.createMany({
+    data: [
+      {
+        nodeId: pProposal.id,
+        text: "Terima syaratnya",
+        nextNodeId: pBestEnd.id,
+        scoreDelta: 30
+      },
+      {
+        nodeId: pProposal.id,
+        text: "Tolak syarat itu",
+        nextNodeId: pNeutralEnd.id,
+        scoreDelta: 10
+      }
+    ]
+  });
+
+  console.log("✅ Prambanan VN Seed Complete:", storyPrambanan.id);
 }
 
 main()

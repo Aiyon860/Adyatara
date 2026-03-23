@@ -3,6 +3,9 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/* Include Tailwind classes from narraleaf-react */
+@source "../../node_modules/narraleaf-react";
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -185,6 +188,25 @@
     border-top: none;
   }
   
+  /* NarraLeaf dialog text override — inline fontSize from game engine */
+  .adyatara-dialog-texts span {
+    font-size: 1rem !important;
+  }
+
+  @media (min-width: 768px) {
+    .adyatara-dialog-texts span {
+      font-size: 1.15rem !important;
+    }
+  }
+
+  /* Hide the prompt dialog that NarraLeaf renders inside the menu container.
+     Menu.prompt("...") creates a separate dialog element that overlaps the
+     choices. We hide it and show the question inside AdyataraMenu instead.
+     Only targets the first child dialog (the prompt), not the choice dialogs. */
+  [data-element-type="menu"] > div > [data-element-type="dialog"] {
+    display: none !important;
+  }
+
   /* Glow effect untuk elements aktif */
   .glow-orange {
     box-shadow: 0 0 15px rgba(232, 114, 74, 0.5), 0 0 30px rgba(232, 114, 74, 0.3);
@@ -213,4 +235,21 @@
     text-transform: uppercase;
     color: var(--muted-foreground);
   }
+}
+/* Override default Leaflet Popup styles for dark theme */
+.leaflet-popup-content-wrapper {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+.leaflet-popup-content {
+  margin: 0 !important;
+  line-height: inherit !important;
+  width: auto !important;
+}
+.leaflet-popup-tip-container {
+  display: none !important;
+}
+.leaflet-popup-close-button {
+  display: none !important;
 }
