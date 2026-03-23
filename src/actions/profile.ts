@@ -46,7 +46,9 @@ export async function updateProfile(
         });
 
         revalidatePath("/dashboard/profile");
+        revalidatePath("/dashboard/profile/edit");
         revalidatePath("/dashboard");
+        revalidatePath("/", "layout"); // Revalidate layout to refresh sidebar
 
         return { success: true, data: updatedUser };
     } catch (error) {

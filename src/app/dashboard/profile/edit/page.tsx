@@ -75,15 +75,21 @@ export default function ProfileEditForm() {
       if (result.success) {
         toast.success("Profil berhasil diperbarui!");
         
-        // Trigger session refresh - this will call JWT callback with trigger: "update"
-        await update();
+        // Trigger session refresh with new data
+        // This will call JWT callback with trigger: "update" and update the token
+        await update({
+          name: values.name,
+          email: values.email,
+          bio: values.bio,
+          avatarUrl: values.avatarUrl,
+        });
         
-        // Wait for session to fully refresh
-        await new Promise(resolve => setTimeout(resolve, 500));
-        
-        // Navigate to profile page
-        router.push("/dashboard/profile");
+        // Refresh the router cache first to ensure server components get fresh data
         router.refresh();
+        
+        // Small delay to ensure refresh is processed, then navigate
+        await new Promise(resolve => setTimeout(resolve, 100));
+        router.push("/dashboard/profile");
       } else {
         toast.error(result.error || "Gagal memperbarui profil");
       }

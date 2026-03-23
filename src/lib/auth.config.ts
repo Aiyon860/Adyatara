@@ -17,8 +17,16 @@ export const authConfig = {
                 token.bio = user.bio;
             }
             
-            // Update token when session is updated - refetch from DB
-            if (trigger === "update") {
+            // Update token when session is updated
+            if (trigger === "update" && session) {
+                // Use the data passed from update() call directly
+                // This ensures immediate sync without waiting for DB
+                if (session.name !== undefined) token.name = session.name;
+                if (session.email !== undefined) token.email = session.email;
+                if (session.avatarUrl !== undefined) token.avatarUrl = session.avatarUrl;
+                if (session.bio !== undefined) token.bio = session.bio;
+            } else if (trigger === "update") {
+                // Fallback: refetch from DB if no session data provided
                 try {
                     const dbUser = await db.user.findUnique({
                         where: { id: token.id as string },
@@ -38,7 +46,6 @@ export const authConfig = {
                     }
                 } catch (error) {
                     console.error("Failed to refetch user data:", error);
-                    // Keep existing token if DB fetch fails
                 }
             }
             
@@ -47,6 +54,9 @@ export const authConfig = {
         async session({ session, token }) {
             if (token && session.user) {
                 session.user.id = token.id as string;
+                session.user.name = token.name ?? null;
+                // @ts-expect-error - email type mismatch between next-auth base and our augmentation
+                session.user.email = token.email ?? null;
                 // @ts-expect-error - role is dynamically added
                 session.user.role = token.role;
                 // @ts-expect-error - avatarUrl is dynamically added
