@@ -13,7 +13,7 @@ const bandung = new Character("Bandung Bondowoso", { color: "#E86B52" });
 const roro = new Character("Roro Jonggrang", { color: "#EAA87E" });
 
 const bandung1 = new Image({
-  src: "/images/prambanan/bandung/1.png",
+  src: "/images/stories/prambanan/bandung/1.webp",
   zoom: 0.7,
   position: {
     yalign: 0.45,
@@ -21,7 +21,7 @@ const bandung1 = new Image({
   },
 });
 const bandung2 = new Image({
-  src: "/images/prambanan/bandung/2.png",
+  src: "/images/stories/prambanan/bandung/2.webp",
   zoom: 0.7,
   position: {
     yalign: 0.45,
@@ -29,7 +29,7 @@ const bandung2 = new Image({
   },
 });
 const bandung3 = new Image({
-  src: "/images/prambanan/bandung/3.png",
+  src: "/images/stories/prambanan/bandung/3.webp",
   zoom: 0.7,
   position: {
     yalign: 0.45,
@@ -37,7 +37,7 @@ const bandung3 = new Image({
   },
 });
 const bandung5 = new Image({
-  src: "/images/prambanan/bandung/5.png",
+  src: "/images/stories/prambanan/bandung/5.webp",
   zoom: 0.7,
   position: {
     yalign: 0.45,
@@ -45,7 +45,7 @@ const bandung5 = new Image({
   },
 });
 const bandung6 = new Image({
-  src: "/images/prambanan/bandung/6.png",
+  src: "/images/stories/prambanan/bandung/6.webp",
   zoom: 0.7,
   position: {
     yalign: 0.45,
@@ -53,7 +53,7 @@ const bandung6 = new Image({
   },
 });
 const bandung7 = new Image({
-  src: "/images/prambanan/bandung/7.png",
+  src: "/images/stories/prambanan/bandung/7.webp",
   zoom: 0.7,
   position: {
     yalign: 0.45,
@@ -61,7 +61,7 @@ const bandung7 = new Image({
   },
 });
 const bandung8 = new Image({
-  src: "/images/prambanan/bandung/8.png",
+  src: "/images/stories/prambanan/bandung/8.webp",
   zoom: 0.7,
   position: {
     yalign: 0.45,
@@ -69,7 +69,7 @@ const bandung8 = new Image({
   },
 });
 const bandung9 = new Image({
-  src: "/images/prambanan/bandung/9.png",
+  src: "/images/stories/prambanan/bandung/9.webp",
   zoom: 0.7,
   position: {
     yalign: 0.45,
@@ -77,7 +77,7 @@ const bandung9 = new Image({
   },
 });
 const bandung10 = new Image({
-  src: "/images/prambanan/bandung/10.png",
+  src: "/images/stories/prambanan/bandung/10.webp",
   zoom: 0.7,
   position: {
     yalign: 0.45,
@@ -86,7 +86,7 @@ const bandung10 = new Image({
 });
 
 const roro1 = new Image({
-  src: "/images/prambanan/roro/1.png",
+  src: "/images/stories/prambanan/roro/1.webp",
   zoom: 0.6,
   position: {
     yalign: 0.45,
@@ -94,7 +94,7 @@ const roro1 = new Image({
   },
 });
 const roro2 = new Image({
-  src: "/images/prambanan/roro/2.png",
+  src: "/images/stories/prambanan/roro/2.webp",
   zoom: 0.6,
   position: {
     yalign: 0.45,
@@ -102,7 +102,7 @@ const roro2 = new Image({
   },
 });
 const roro4 = new Image({
-  src: "/images/prambanan/roro/4.png",
+  src: "/images/stories/prambanan/roro/4.webp",
   zoom: 0.6,
   position: {
     yalign: 0.45,
@@ -110,7 +110,7 @@ const roro4 = new Image({
   },
 });
 const roro5 = new Image({
-  src: "/images/prambanan/roro/5.png",
+  src: "/images/stories/prambanan/roro/5.webp",
   zoom: 0.6,
   position: {
     yalign: 0.45,
@@ -118,7 +118,7 @@ const roro5 = new Image({
   },
 });
 const roro6 = new Image({
-  src: "/images/prambanan/roro/6.png",
+  src: "/images/stories/prambanan/roro/6.webp",
   zoom: 0.6,
   position: {
     yalign: 0.45,
@@ -126,7 +126,7 @@ const roro6 = new Image({
   },
 });
 const roro7 = new Image({
-  src: "/images/prambanan/roro/7.png",
+  src: "/images/stories/prambanan/roro/7.webp",
   zoom: 0.6,
   position: {
     yalign: 0.45,
@@ -135,7 +135,7 @@ const roro7 = new Image({
 });
 
 const roro8 = new Image({
-  src: "/images/prambanan/roro/8.png",
+  src: "/images/stories/prambanan/roro/8.webp",
   zoom: 0.6,
   position: {
     yalign: 0.45,
@@ -150,140 +150,140 @@ const soundConfigBgm = { volume: 0.2, loop: true, sync: false };
 
 const soundbandung1 = new Sound({
   ...soundConfig,
-  src: "/images/prambanan/bandung/1.mp3",
+  src: "/audio/prambanan/bandung/1.mp3",
 });
 const soundbandung2 = new Sound({
   ...soundConfig,
-  src: "/images/prambanan/bandung/2.mp3",
+  src: "/audio/prambanan/bandung/2.mp3",
 });
 const soundbandung3 = new Sound({
   ...soundConfig,
-  src: "/images/prambanan/bandung/3.mp3",
+  src: "/audio/prambanan/bandung/3.mp3",
 });
 const soundbandung5 = new Sound({
   ...soundConfig,
-  src: "/images/prambanan/bandung/5.mp3",
+  src: "/audio/prambanan/bandung/5.mp3",
 });
 const soundbandung6 = new Sound({
   ...soundConfig,
-  src: "/images/prambanan/bandung/6.mp3",
+  src: "/audio/prambanan/bandung/6.mp3",
 });
 const soundbandung7 = new Sound({
   ...soundConfig,
-  src: "/images/prambanan/bandung/7.mp3",
+  src: "/audio/prambanan/bandung/7.mp3",
 });
 const soundbandung8 = new Sound({
   ...soundConfig,
-  src: "/images/prambanan/bandung/8.mp3",
+  src: "/audio/prambanan/bandung/8.mp3",
 });
 const soundbandung9 = new Sound({
   ...soundConfig,
-  src: "/images/prambanan/bandung/9.mp3",
+  src: "/audio/prambanan/bandung/9.mp3",
 });
 const soundbandung10 = new Sound({
   ...soundConfig,
-  src: "/images/prambanan/bandung/10.mp3",
+  src: "/audio/prambanan/bandung/10.mp3",
 });
 const soundbandung11 = new Sound({
   ...soundConfig,
-  src: "/images/prambanan/bandung/1-1.mp3",
+  src: "/audio/prambanan/bandung/1-1.mp3",
 });
 
 // Sound - Roro Jonggrang
 const soundroro1 = new Sound({
   ...soundConfig,
-  src: "/images/prambanan/roro/1.mp3",
+  src: "/audio/prambanan/roro/1.mp3",
 });
 const soundroro2 = new Sound({
   ...soundConfig,
-  src: "/images/prambanan/roro/2.mp3",
+  src: "/audio/prambanan/roro/2.mp3",
 });
 const soundroro3 = new Sound({
   ...soundConfig,
-  src: "/images/prambanan/roro/3.mp3",
+  src: "/audio/prambanan/roro/3.mp3",
 });
 const soundroro4 = new Sound({
   ...soundConfig,
-  src: "/images/prambanan/roro/4.mp3",
+  src: "/audio/prambanan/roro/4.mp3",
 });
 const soundroro5 = new Sound({
   ...soundConfig,
-  src: "/images/prambanan/roro/5.mp3",
+  src: "/audio/prambanan/roro/5.mp3",
 });
 const soundroro6 = new Sound({
   ...soundConfig,
-  src: "/images/prambanan/roro/6.mp3",
+  src: "/audio/prambanan/roro/6.mp3",
 });
 const soundroro7 = new Sound({
   ...soundConfig,
-  src: "/images/prambanan/roro/7.mp3",
+  src: "/audio/prambanan/roro/7.mp3",
 });
 
 // bgmusic
 
 const bgm1 = Sound.bgm({
   ...soundConfigBgm,
-  src: "/music/1.mp3",
+  src: "/music/prambanan/1.mp3",
 });
 
 const bgm2 = Sound.bgm({
   ...soundConfigBgm,
-  src: "/music/2.mp3",
+  src: "/music/prambanan/2.mp3",
 });
 
 const bgm3 = Sound.bgm({
   ...soundConfigBgm,
-  src: "/music/3.mp3",
+  src: "/music/prambanan/3.mp3",
 });
 
 const bgm4 = Sound.bgm({
   ...soundConfigBgm,
-  src: "/music/4.mp3",
+  src: "/music/prambanan/4.mp3",
 });
 
 const bgm5 = Sound.bgm({
   ...soundConfigBgm,
-  src: "/music/5.mp3",
+  src: "/music/prambanan/5.mp3",
 });
 
 const bgm6 = Sound.bgm({
   ...soundConfigBgm,
-  src: "/music/6.mp3",
+  src: "/music/prambanan/6.mp3",
 });
 
 // Scenes
 const sceneIntro = new Scene("intro", {
-  background: "/images/prambanan/1.jpeg",
+  background: "/images/stories/prambanan/1.webp",
   backgroundMusic: bgm1,
   backgroundMusicFade: 1000,
 });
 
 const sceneChoice1 = new Scene("choice1", {
-  background: "/images/prambanan/2.jpeg",
+  background: "/images/stories/prambanan/2.webp",
   backgroundMusic: bgm2,
   backgroundMusicFade: 1000,
 });
 
 const sceneProposal = new Scene("proposal", {
-  background: "/images/prambanan/3.jpeg",
+  background: "/images/stories/prambanan/3.webp",
   backgroundMusic: bgm3,
   backgroundMusicFade: 1000,
 });
 
 const sceneForce = new Scene("force", {
-  background: "/images/prambanan/4.jpeg",
+  background: "/images/stories/prambanan/4.webp",
   backgroundMusic: bgm4,
   backgroundMusicFade: 1000,
 });
 
 const sceneChallenge = new Scene("challenge", {
-  background: "/images/prambanan/5.jpeg",
+  background: "/images/stories/prambanan/5.webp",
   backgroundMusic: bgm5,
   backgroundMusicFade: 1000,
 });
 
 const sceneBuild = new Scene("build", {
-  background: "/images/prambanan/6.jpeg",
+  background: "/images/stories/prambanan/6.webp",
   backgroundMusic: bgm6,
   backgroundMusicFade: 1000,
 });
