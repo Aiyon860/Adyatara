@@ -14,7 +14,10 @@ export const profileSchema = z.object({
         .optional(),
     avatarUrl: z
         .string()
-        .url("Please enter a valid URL")
+        .refine(
+            (val) => !val || val === "" || val.startsWith("/") || val.startsWith("http://") || val.startsWith("https://"),
+            "Please enter a valid URL or path"
+        )
         .optional()
         .or(z.literal("")),
 });

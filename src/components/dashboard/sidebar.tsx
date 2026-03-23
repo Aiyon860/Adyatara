@@ -58,11 +58,24 @@ export function Sidebar() {
     >
       {/* Header with Logo and Toggle */}
       <div className="flex items-center justify-between p-4 border-b border-[#2E2318]">
-        {!collapsed && (
-          <Link href="/dashboard" className="flex items-center gap-2">
-            <div className="text-2xl font-bold text-[#E8724A] tracking-wide">
-              ADYATARA
+        {collapsed ? (
+          // Show only box icon when collapsed
+          <Link href="/dashboard" className="mx-auto">
+            <div className="w-8 h-8 border border-gray-600 relative flex items-center justify-center">
+              <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-500" />
+              <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-500" />
             </div>
+          </Link>
+        ) : (
+          // Show box + text when expanded
+          <Link href="/dashboard" className="flex items-center gap-4">
+            <div className="w-8 h-8 border border-gray-600 relative flex items-center justify-center">
+              <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-500" />
+              <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-500" />
+            </div>
+            <span className="text-[11px] tracking-[0.4em] font-serif text-gray-300 uppercase">
+              ADYATARA
+            </span>
           </Link>
         )}
         <Button
@@ -71,7 +84,7 @@ export function Sidebar() {
           onClick={toggleSidebar}
           className={cn(
             "h-8 w-8 text-[#9A8A7A] hover:text-[#F5F0EB] hover:bg-[#1A1410]",
-            collapsed && "mx-auto"
+            collapsed && "ml-auto"
           )}
         >
           {collapsed ? (

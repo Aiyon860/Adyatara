@@ -46,8 +46,8 @@ export default async function ExplorePage() {
       <div className="relative z-10 w-full h-full flex flex-col pointer-events-none">
         {/* Header */}
         <div className="flex items-center justify-between p-8 w-full mr-auto ml-auto md:px-12">
-          {/* Left - Back Button + Logo */}
-          <div className="flex items-center gap-6 pointer-events-auto">
+          {/* Left - Back Button */}
+          <div className="flex items-center pointer-events-auto">
             <Link
               href="/dashboard"
               className="flex items-center gap-2 px-4 py-2 border border-gray-800/80 bg-[#0D0907]/50 hover:bg-[#1A1410]/80 transition-colors group"
@@ -57,20 +57,10 @@ export default async function ExplorePage() {
                 KEMBALI
               </span>
             </Link>
-
-            <div className="flex items-center gap-4">
-              <div className="w-8 h-8 border border-gray-700/50 flex items-center justify-center relative">
-                <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-500" />
-                <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-500" />
-              </div>
-              <span className="text-[11px] tracking-[0.4em] font-serif text-gray-300 uppercase">
-                ADYATARA
-              </span>
-            </div>
           </div>
 
-          {/* Right - Stats */}
-          <div className="flex items-center gap-8 pointer-events-auto">
+          {/* Center - Stats */}
+          <div className="flex items-center pointer-events-auto">
             {/* Stats Box */}
             <div className="relative border border-gray-800/80 bg-[#0D0907]/50 flex items-center py-3 px-8">
               <div className="absolute top-0 left-0 w-1.5 h-1.5 border-l border-t border-gray-600/50" />
@@ -96,6 +86,19 @@ export default async function ExplorePage() {
                   </p>
                   <p className="text-[13px] font-medium text-white">{score}</p>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right - Logo */}
+          <div className="flex items-center pointer-events-auto">
+            <div className="flex items-center gap-4">
+              <span className="text-[11px] tracking-[0.4em] font-serif text-gray-300 uppercase">
+                ADYATARA
+              </span>
+              <div className="w-8 h-8 border border-gray-700/50 flex items-center justify-center relative">
+                <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-500" />
+                <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-500" />
               </div>
             </div>
           </div>

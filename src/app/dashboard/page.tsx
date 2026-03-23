@@ -11,7 +11,6 @@ import {
   TrendingUp,
 } from "lucide-react";
 import Link from "next/link";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const metadata = constructMetadata({
   title: "Dashboard - Statistik",
@@ -139,167 +138,178 @@ export default async function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0D0A08] text-[#F5F0EB] p-6 md:p-8">
+    <div className="min-h-screen bg-[#0A0705] text-[#F5F0EB] p-6 md:p-8">
       {/* Welcome Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold mb-2">
+      <div className="mb-10">
+        <div className="flex items-center gap-4 mb-4">
+          <div className="h-px w-12 bg-[#D96B4A]/30"></div>
+          <p className="text-[9px] tracking-[0.3em] text-[#D96B4A] uppercase font-medium">DASHBOARD</p>
+        </div>
+        <h1 className="text-4xl font-serif text-white mb-3">
           Selamat Datang, {userData.name || "Penjelajah"}!
         </h1>
-        <p className="text-[#9A8A7A] text-sm">
+        <p className="text-[13px] text-gray-400 font-light">
           Lihat progress dan pencapaian Anda dalam menjelajahi budaya Nusantara
         </p>
       </div>
 
       {/* Stats Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
         {/* Total Score */}
-        <Card className="bg-[#1A1410] border-[#2E2318] relative overflow-hidden group hover:border-[#E8724A]/50 transition-colors">
-          <div className="absolute top-0 left-0 w-2 h-2 border-l border-t border-[#E8724A]/30" />
-          <div className="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-[#E8724A]/30" />
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-[#9A8A7A] flex items-center gap-2">
-              <Trophy className="w-4 h-4 text-[#E8724A]" />
-              Total Skor
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-[#E8724A]">
-              {totalScore.toLocaleString()}
-            </div>
-          </CardContent>
-        </Card>
+        <div className="relative p-6 bg-[#0D0907] border border-transparent group min-h-[140px]">
+          {/* Corner brackets */}
+          <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+          <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+          <div className="absolute bottom-0 left-0 w-3 h-3 border-l border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+          <div className="absolute bottom-0 right-0 w-3 h-3 border-r border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+
+          <div className="mb-4 inline-flex p-3 border border-gray-800/80 group-hover:border-[#D96B4A]/30 rounded-sm transition-colors relative">
+            <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
+            <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
+            <Trophy className="w-5 h-5 text-[#D96B4A]" strokeWidth={2} />
+          </div>
+          <p className="text-[10px] tracking-[0.2em] text-gray-500 uppercase mb-2">Total Skor</p>
+          <p className="text-3xl font-serif text-[#D96B4A]">
+            {totalScore.toLocaleString()}
+          </p>
+        </div>
 
         {/* Level */}
-        <Card className="bg-[#1A1410] border-[#2E2318] relative overflow-hidden group hover:border-[#E8724A]/50 transition-colors">
-          <div className="absolute top-0 left-0 w-2 h-2 border-l border-t border-[#E8724A]/30" />
-          <div className="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-[#E8724A]/30" />
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-[#9A8A7A] flex items-center gap-2">
-              <Award className="w-4 h-4 text-[#E8724A]" />
-              Level
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex items-end gap-2 mb-2">
-              <div className="text-3xl font-bold text-[#F5F0EB]">{level}</div>
-              <div className="text-sm text-[#9A8A7A] mb-1">
-                / Level {level + 1}
-              </div>
-            </div>
-            <div className="w-full h-2 bg-[#2E2318] rounded-full overflow-hidden">
-              <div
-                className="h-full bg-gradient-to-r from-[#E8724A] to-[#F0956E] rounded-full transition-all"
-                style={{ width: `${Math.min(levelProgress, 100)}%` }}
-              />
-            </div>
-            <div className="text-xs text-[#9A8A7A] mt-1">
-              {Math.round(levelProgress)}% menuju level berikutnya
-            </div>
-          </CardContent>
-        </Card>
+        <div className="relative p-6 bg-[#0D0907] border border-transparent group min-h-[140px]">
+          {/* Corner brackets */}
+          <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+          <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+          <div className="absolute bottom-0 left-0 w-3 h-3 border-l border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+          <div className="absolute bottom-0 right-0 w-3 h-3 border-r border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+
+          <div className="mb-4 inline-flex p-3 border border-gray-800/80 group-hover:border-[#D96B4A]/30 rounded-sm transition-colors relative">
+            <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
+            <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
+            <Award className="w-5 h-5 text-[#D96B4A]" strokeWidth={2} />
+          </div>
+          <p className="text-[10px] tracking-[0.2em] text-gray-500 uppercase mb-2">Level</p>
+          <div className="flex items-end gap-2 mb-3">
+            <p className="text-3xl font-serif text-white">{level}</p>
+            <p className="text-sm text-gray-500 mb-1">/ Level {level + 1}</p>
+          </div>
+          <div className="w-full h-1.5 bg-gray-800 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-gradient-to-r from-[#D96B4A] to-[#E86B52] rounded-full transition-all"
+              style={{ width: `${Math.min(levelProgress, 100)}%` }}
+            />
+          </div>
+          <p className="text-[10px] text-gray-500 mt-2">
+            {Math.round(levelProgress)}% menuju level berikutnya
+          </p>
+        </div>
 
         {/* Stories Completed */}
-        <Card className="bg-[#1A1410] border-[#2E2318] relative overflow-hidden group hover:border-[#E8724A]/50 transition-colors">
-          <div className="absolute top-0 left-0 w-2 h-2 border-l border-t border-[#E8724A]/30" />
-          <div className="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-[#E8724A]/30" />
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-[#9A8A7A] flex items-center gap-2">
-              <BookOpen className="w-4 h-4 text-[#E8724A]" />
-              Cerita Selesai
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-[#F5F0EB]">
-              {completedStories}
-            </div>
-            <div className="text-xs text-[#9A8A7A] mt-1">
-              dari {totalStories} cerita
-            </div>
-          </CardContent>
-        </Card>
+        <div className="relative p-6 bg-[#0D0907] border border-transparent group min-h-[140px]">
+          {/* Corner brackets */}
+          <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+          <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+          <div className="absolute bottom-0 left-0 w-3 h-3 border-l border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+          <div className="absolute bottom-0 right-0 w-3 h-3 border-r border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+
+          <div className="mb-4 inline-flex p-3 border border-gray-800/80 group-hover:border-[#D96B4A]/30 rounded-sm transition-colors relative">
+            <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
+            <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
+            <BookOpen className="w-5 h-5 text-[#D96B4A]" strokeWidth={2} />
+          </div>
+          <p className="text-[10px] tracking-[0.2em] text-gray-500 uppercase mb-2">Cerita Selesai</p>
+          <p className="text-3xl font-serif text-white">{completedStories}</p>
+          <p className="text-[10px] text-gray-500 mt-1">dari {totalStories} cerita</p>
+        </div>
 
         {/* Knowledge Unlocked */}
-        <Card className="bg-[#1A1410] border-[#2E2318] relative overflow-hidden group hover:border-[#E8724A]/50 transition-colors">
-          <div className="absolute top-0 left-0 w-2 h-2 border-l border-t border-[#E8724A]/30" />
-          <div className="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-[#E8724A]/30" />
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium text-[#9A8A7A] flex items-center gap-2">
-              <Lightbulb className="w-4 h-4 text-[#E8724A]" />
-              Pengetahuan
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-[#F5F0EB]">
-              {knowledgeUnlocked}
-            </div>
-            <div className="text-xs text-[#9A8A7A] mt-1">
-              pengetahuan terbuka
-            </div>
-          </CardContent>
-        </Card>
+        <div className="relative p-6 bg-[#0D0907] border border-transparent group min-h-[140px]">
+          {/* Corner brackets */}
+          <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+          <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+          <div className="absolute bottom-0 left-0 w-3 h-3 border-l border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+          <div className="absolute bottom-0 right-0 w-3 h-3 border-r border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+
+          <div className="mb-4 inline-flex p-3 border border-gray-800/80 group-hover:border-[#D96B4A]/30 rounded-sm transition-colors relative">
+            <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
+            <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
+            <Lightbulb className="w-5 h-5 text-[#D96B4A]" strokeWidth={2} />
+          </div>
+          <p className="text-[10px] tracking-[0.2em] text-gray-500 uppercase mb-2">Pengetahuan</p>
+          <p className="text-3xl font-serif text-white">{knowledgeUnlocked}</p>
+          <p className="text-[10px] text-gray-500 mt-1">pengetahuan terbuka</p>
+        </div>
       </div>
 
       {/* Region Progress & Recent Activity */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
         {/* Region Progress */}
-        <Card className="bg-[#1A1410] border-[#2E2318] relative">
-          <div className="absolute top-0 left-0 w-2 h-2 border-l border-t border-[#E8724A]/30" />
-          <div className="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-[#E8724A]/30" />
-          <CardHeader>
-            <CardTitle className="text-lg font-semibold text-[#F5F0EB] flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-[#E8724A]" />
-              Progress Per Region
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
+        <div className="relative p-8 bg-[#0D0907] border border-transparent group">
+          {/* Corner brackets */}
+          <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+          <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+          <div className="absolute bottom-0 left-0 w-3 h-3 border-l border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+          <div className="absolute bottom-0 right-0 w-3 h-3 border-r border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+
+          <div className="flex items-center gap-3 mb-6">
+            <div className="inline-flex p-2 border border-gray-800/80 rounded-sm relative">
+              <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
+              <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
+              <TrendingUp className="w-4 h-4 text-[#D96B4A]" strokeWidth={2} />
+            </div>
+            <h3 className="text-lg font-serif text-white">Progress Per Region</h3>
+          </div>
+
+          <div className="space-y-5">
             {regionProgress.map((region) => (
               <div key={region.name}>
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm font-medium text-[#F5F0EB]">
-                    {region.name}
-                  </span>
-                  <span className="text-xs text-[#9A8A7A]">
+                  <span className="text-[13px] text-gray-300">{region.name}</span>
+                  <span className="text-[11px] text-gray-500">
                     {region.completed}/{region.total}
                   </span>
                 </div>
-                <div className="w-full h-2 bg-[#2E2318] rounded-full overflow-hidden">
+                <div className="w-full h-1.5 bg-gray-800 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-gradient-to-r from-[#E8724A] to-[#F0956E] rounded-full transition-all"
+                    className="h-full bg-gradient-to-r from-[#D96B4A] to-[#E86B52] rounded-full transition-all"
                     style={{ width: `${region.percentage}%` }}
                   />
                 </div>
               </div>
             ))}
             {regionProgress.length === 0 && (
-              <p className="text-sm text-[#9A8A7A] text-center py-8">
+              <p className="text-[13px] text-gray-500 text-center py-8">
                 Belum ada progress di region manapun.{" "}
-                <Link
-                  href="/explore"
-                  className="text-[#E8724A] hover:underline"
-                >
+                <Link href="/explore" className="text-[#D96B4A] hover:text-[#E86B52] transition-colors">
                   Mulai jelajah sekarang!
                 </Link>
               </p>
             )}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
         {/* Recent Activity */}
-        <Card className="bg-[#1A1410] border-[#2E2318] relative">
-          <div className="absolute top-0 left-0 w-2 h-2 border-l border-t border-[#E8724A]/30" />
-          <div className="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-[#E8724A]/30" />
-          <CardHeader>
-            <CardTitle className="text-lg font-semibold text-[#F5F0EB] flex items-center gap-2">
-              <Clock className="w-5 h-5 text-[#E8724A]" />
-              Aktivitas Terbaru
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
+        <div className="relative p-8 bg-[#0D0907] border border-transparent group">
+          {/* Corner brackets */}
+          <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+          <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+          <div className="absolute bottom-0 left-0 w-3 h-3 border-l border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+          <div className="absolute bottom-0 right-0 w-3 h-3 border-r border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+
+          <div className="flex items-center gap-3 mb-6">
+            <div className="inline-flex p-2 border border-gray-800/80 rounded-sm relative">
+              <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
+              <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
+              <Clock className="w-4 h-4 text-[#D96B4A]" strokeWidth={2} />
+            </div>
+            <h3 className="text-lg font-serif text-white">Aktivitas Terbaru</h3>
+          </div>
+
+          <div className="space-y-4">
             {recentActivities.length > 0 ? (
               recentActivities.map((activity) => (
                 <div
                   key={activity.id}
-                  className="flex items-start gap-3 pb-3 border-b border-[#2E2318] last:border-0 last:pb-0"
+                  className="flex items-start gap-3 pb-4 border-b border-gray-800/50 last:border-0 last:pb-0"
                 >
                   <div
                     className={`w-2 h-2 rounded-full mt-1.5 ${
@@ -309,13 +319,11 @@ export default async function DashboardPage() {
                     }`}
                   />
                   <div className="flex-1">
-                    <p className="text-sm font-medium text-[#F5F0EB]">
-                      {activity.status === "completed"
-                        ? "Selesai"
-                        : "Memainkan"}{" "}
+                    <p className="text-[13px] text-gray-300">
+                      {activity.status === "completed" ? "Selesai" : "Memainkan"}{" "}
                       &quot;{activity.story.title}&quot;
                     </p>
-                    <p className="text-xs text-[#9A8A7A] mt-0.5">
+                    <p className="text-[11px] text-gray-500 mt-1">
                       {formatDate(activity.startedAt)} •{" "}
                       {activity.status === "completed"
                         ? `Skor: ${activity.score}`
@@ -325,39 +333,41 @@ export default async function DashboardPage() {
                 </div>
               ))
             ) : (
-              <p className="text-sm text-[#9A8A7A] text-center py-8">
+              <p className="text-[13px] text-gray-500 text-center py-8">
                 Belum ada aktivitas.{" "}
-                <Link
-                  href="/explore"
-                  className="text-[#E8724A] hover:underline"
-                >
+                <Link href="/explore" className="text-[#D96B4A] hover:text-[#E86B52] transition-colors">
                   Mulai petualangan Anda!
                 </Link>
               </p>
             )}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
 
       {/* Achievements Section (Placeholder) */}
-      <Card className="bg-[#1A1410] border-[#2E2318] relative">
-        <div className="absolute top-0 left-0 w-2 h-2 border-l border-t border-[#E8724A]/30" />
-        <div className="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-[#E8724A]/30" />
-        <CardHeader>
-          <CardTitle className="text-lg font-semibold text-[#F5F0EB] flex items-center gap-2">
-            <Trophy className="w-5 h-5 text-[#E8724A]" />
-            Pencapaian
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="text-center py-12">
-            <Trophy className="w-16 h-16 text-[#9A8A7A] mx-auto mb-4 opacity-50" />
-            <p className="text-[#9A8A7A] text-sm">
-              Sistem pencapaian akan segera hadir...
-            </p>
+      <div className="relative p-8 bg-[#0D0907] border border-transparent group">
+        {/* Corner brackets */}
+        <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+        <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+        <div className="absolute bottom-0 left-0 w-3 h-3 border-l border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+        <div className="absolute bottom-0 right-0 w-3 h-3 border-r border-b border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
+
+        <div className="flex items-center gap-3 mb-6">
+          <div className="inline-flex p-2 border border-gray-800/80 rounded-sm relative">
+            <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
+            <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
+            <Trophy className="w-4 h-4 text-[#D96B4A]" strokeWidth={2} />
           </div>
-        </CardContent>
-      </Card>
+          <h3 className="text-lg font-serif text-white">Pencapaian</h3>
+        </div>
+
+        <div className="text-center py-12">
+          <Trophy className="w-16 h-16 text-gray-700 mx-auto mb-4" />
+          <p className="text-[13px] text-gray-500">
+            Sistem pencapaian akan segera hadir...
+          </p>
+        </div>
+      </div>
     </div>
   );
 }
