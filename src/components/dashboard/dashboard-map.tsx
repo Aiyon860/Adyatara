@@ -4,19 +4,22 @@ import { useEffect, useState } from "react";
 import { MapContainer, GeoJSON, Marker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import type { FeatureCollection } from "geojson";
+import { regionStoryMap, regionNames } from "@/stories";
+import { toast } from "sonner";
 
 // Region definitions matching the screenshot
 const regions = [
-  { id: "sumatra", name: "SUMATRA", coords: [-0.5897, 101.3431], status: "aktif" }, // Aktif = Glowing red circle
-  { id: "jawa", name: "JAWA", coords: [-7.6145, 110.7128], status: "aktif" },
-  { id: "kalimantan", name: "KALIMANTAN", coords: [0.9619, 114.5548], status: "aktif" },
-  { id: "sulawesi", name: "SULAWESI", coords: [-2.8441, 120.8718], status: "aktif" },
-  { id: "bali-nusa", name: "BALI & NUSA TENGGARA", coords: [-8.6500, 117.1000], status: "aktif" },
-  { id: "papua", name: "PAPUA", coords: [-4.2699, 138.0803], status: "aktif" }
+  { id: "sumatra", coords: [-0.5897, 101.3431], status: "aktif" },
+  { id: "jawa", coords: [-7.6145, 110.7128], status: "aktif" },
+  { id: "kalimantan", coords: [0.9619, 114.5548], status: "aktif" },
+  { id: "sulawesi", coords: [-2.8441, 120.8718], status: "aktif" },
+  { id: "bali-nusa", coords: [-8.6500, 117.1000], status: "aktif" },
+  { id: "papua", coords: [-4.2699, 138.0803], status: "aktif" }
 ];
 
 export default function DashboardMap() {
-  const [geoData, setGeoData] = useState<any>(null);
+  const [geoData, setGeoData] = useState<FeatureCollection | null>(null);
 
   useEffect(() => {
     fetch("/indonesia.geojson")
@@ -105,10 +108,15 @@ export default function DashboardMap() {
           <Marker
             key={region.id}
             position={region.coords as [number, number]}
-            icon={createCustomIcon(region.status, region.name)}
+            icon={createCustomIcon(region.status, regionNames[region.id] || region.id.toUpperCase())}
             eventHandlers={{
                 click: () => {
-                    window.location.href = `/game?region=${region.id}`;
+                    const storySlug = regionStoryMap[region.id];
+                    if (storySlug) {
+                        window.location.href = `/game?story=${storySlug}`;
+                    } else {
+                        toast.info("Cerita untuk provinsi ini belum tersedia");
+                    }
                 }
             }}
           />
