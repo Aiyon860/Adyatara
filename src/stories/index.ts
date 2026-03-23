@@ -16,8 +16,8 @@ export const storyRegistry: Record<string, () => Promise<StoryModule>> = {
 };
 
 export const storyInfoMap: Record<string, { title: string; coverImage: string }> = {
-  "prambanan": { title: "Legenda Candi Prambanan", coverImage: "/images/jawa-tengah.jpg" },
-  "timun-mas": { title: "Legenda Timun Mas", coverImage: "/images/jawa-tengah.jpg" },
+  "prambanan": { title: "Legenda Candi Prambanan", coverImage: "/images/jawa-tengah.webp" },
+  "timun-mas": { title: "Legenda Timun Mas", coverImage: "/images/jawa-tengah.webp" },
 };
 
 export const endingLabels: Record<string, { label: string; color: string }> = {

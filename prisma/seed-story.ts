@@ -196,7 +196,7 @@ async function main() {
       description: "Kisah cinta dan pengkhianatan Bandung Bondowoso dan Roro Jonggrang.",
       difficulty: "Pemula",
       levelReq: 1,
-      coverImage: "/images/jawa-tengah.jpg",
+      coverImage: "/images/jawa-tengah.webp",
       backgroundMusicDefault: "/audio/bgm-village.mp3"
     }
   });
