@@ -15,7 +15,7 @@ function ResultPageContent() {
 
   const storyInfo = storyInfoMap[storySlug];
   const storyTitle = storyInfo?.title ?? storySlug.replace(/-/g, " ");
-  const coverImage = storyInfo?.coverImage ?? "/images/jawa-tengah.jpg";
+  const coverImage = storyInfo?.coverImage ?? "/images/jawa-tengah.webp";
   const endingInfo = endingLabels[endingKey] ?? endingLabels.neutral;
 
   const stats = [

@@ -367,10 +367,10 @@ sceneForce.action([
   narrator.say`Roro Jonggrang marah besar dan menolak dengan keras.`,
   narrator.say`Bandung Bondowoso kehilangan kesabarannya dan murka.`,
   bandung6.show({ ease: "easeInOut", duration: 1000 }),
-  soundbandung6.play(),
   narrator.say`Karena amarahnya, ia mengutuk Roro Jonggrang menjadi batu.`,
+  roro8.show({ ease: "easeInOut", duration: 1000 }),
   narrator.say`Dan demikianlah kisah tragis berakhir. Tamat (Bad Ending).`,
-  soundbandung6.stop(),
+  bgm4.stop(),
   Script.execute(({ storable }) => setEnding(storable, "bad")),
 ]);
 
@@ -392,6 +392,7 @@ sceneChallenge.action([
   soundbandung7.stop(),
   narrator.say`Bandung Bondowoso meninggalkan Roro Jonggrang dengan kekecewaan besar.`,
   narrator.say`Dan kisah ini berakhir tanpa kebahagiaan. Tamat (Neutral Ending).`,
+  bgm5.stop(),
   Script.execute(({ storable }) => setEnding(storable, "neutral")),
 ]);
 
@@ -428,6 +429,7 @@ sceneBuild.action([
   narrator.say`Bandung Bondowoso marah besar dan mengutuk Roro Jonggrang menjadi candi yang ke-1000.`,
   roro8.show({ ease: "easeInOut", duration: 1000 }),
   narrator.say`Begitulah Legenda Candi Prambanan tercipta. Roro Jonggrang menjadi candi, dan Bandung Bondowoso kehilangan cintanya selamanya. Tamat (Best Ending).`,
+  bgm6.stop(),
   Script.execute(({ storable }) => setEnding(storable, "best")),
 ]);
 
@@ -442,5 +444,5 @@ export const storyMeta = {
   description:
     "Kisah cinta dan pengkhianatan Bandung Bondowoso dan Roro Jonggrang.",
   difficulty: "Pemula",
-  coverImage: "/images/jawa-tengah.jpg",
+  coverImage: "/images/jawa-tengah.webp",
 };
