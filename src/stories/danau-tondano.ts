@@ -19,22 +19,43 @@ const maharimbow = new Character("Maharimbow", { color: "#4A90E2" });
 const IMG = { zoom: 0.65, position: { yalign: 0.45, xalign: 0.5 } };
 
 // Marimbow
-const imgMar1 = new Image({ src: "/images/tondano/mar/normal.webp", ...IMG }); // Cantik jelita
-const imgMar2 = new Image({ src: "/images/tondano/mar/disguise.webp", ...IMG }); // Penyamaran pria
-const imgMar3 = new Image({ src: "/images/tondano/mar/fight.webp", ...IMG }); // Siaga bertarung
-const imgMar4 = new Image({ src: "/images/tondano/mar/revealed.webp", ...IMG }); // Rambut terurai
-const imgMar5 = new Image({ src: "/images/tondano/mar/sad.webp", ...IMG }); // Bimbang/Sedih
+const imgMar1 = new Image({
+  src: "/images/tondano/marimbow/normal.webp",
+  ...IMG,
+}); // Cantik jelita
+const imgMar2 = new Image({
+  src: "/images/tondano/marimbow/disguise.webp",
+  ...IMG,
+}); // Penyamaran pria
+const imgMar3 = new Image({
+  src: "/images/tondano/marimbow/fight.webp",
+  ...IMG,
+}); // Siaga bertarung
+const imgMar4 = new Image({
+  src: "/images/tondano/marimbow/revealed.webp",
+  ...IMG,
+}); // Rambut terurai
+const imgMar5 = new Image({ src: "/images/tondano/marimbow/sad.webp", ...IMG }); // Bimbang/Sedih
 
 // Maharimbow
-const imgMah1 = new Image({ src: "/images/tondano/mah/guard.webp", ...IMG }); // Waspada
+const imgMah1 = new Image({
+  src: "/images/tondano/maharimbow/guard.webp",
+  ...IMG,
+}); // Waspada
 const imgMah2 = new Image({
-  src: "/images/tondano/mah/surprised.webp",
+  src: "/images/tondano/maharimbow/surprised.webp",
   ...IMG,
 }); // Terkejut
-const imgMah3 = new Image({ src: "/images/tondano/mah/love.webp", ...IMG }); // Jatuh hati
+const imgMah3 = new Image({
+  src: "/images/tondano/maharimbow/love.webp",
+  ...IMG,
+}); // Jatuh hati
 
 // Tonaas
-const imgTonaas = new Image({ src: "/images/tondano/tonaas/old.webp", ...IMG });
+const imgTonaas = new Image({
+  src: "/images/tondano/tonaas-utara/old.webp",
+  ...IMG,
+});
 
 // --- BACKGROUND MUSIC (BGM) ---
 const bgmIntro = new Sound({
