@@ -134,7 +134,7 @@ function GamePlayer({
               {storyMeta.title}
             </h2>
             <p className="text-sm mt-1 text-white">
-              Tekan "spasi" untuk memulai/melanjutkan cerita
+              Tekan &quot;spasi&quot; untuk memulai/melanjutkan cerita
             </p>
           </div>
 
@@ -202,7 +202,7 @@ function GamePlayer({
           liveGameRef.current = liveGame;
           if (!startedRef.current) {
             startedRef.current = true;
-            
+
             // Start new game
             liveGame.newGame();
             const gameNs = Storable.createNamespace("game", {
@@ -210,7 +210,7 @@ function GamePlayer({
               ending: "",
             });
             storable.setNamespace("game", gameNs);
-            
+
             // Auto-trigger space key after a short delay to continue the game
             setTimeout(() => {
               window.dispatchEvent(new KeyboardEvent("keydown", { key: " " }));
@@ -342,10 +342,10 @@ export function AdyataraPlayer() {
             </div>
 
             <p className="text-gray-400 text-sm leading-relaxed mb-4">
-              Untuk memastikan visual novel dapat berjalan dengan baik, 
-              silakan refresh halaman browser secara manual (Ctrl+R atau F5).
+              Untuk memastikan visual novel dapat berjalan dengan baik, silakan
+              refresh halaman browser secara manual (Ctrl+R atau F5).
             </p>
-            
+
             <p className="text-gray-500 text-xs">
               Setelah di-refresh, klik tombol X di atas untuk menutup popup ini.
             </p>
@@ -353,7 +353,9 @@ export function AdyataraPlayer() {
         </div>
       )}
 
-      <div className={showRefreshDialog ? "pointer-events-none opacity-50" : ""}>
+      <div
+        className={showRefreshDialog ? "pointer-events-none opacity-50" : ""}
+      >
         <GameProviders key={`${storySlug}-${mountKey}`}>
           <GamePlayer
             story={storyData.story}
