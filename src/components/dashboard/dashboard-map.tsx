@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { MapContainer, GeoJSON, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import type { FeatureCollection } from "geojson";
@@ -8,8 +8,6 @@ import { provinceStoryMap, storyInfoMap } from "@/stories";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { X } from "lucide-react";
-import { prefetchStoryModule, preloadStoryAssets } from "@/lib/preload-assets";
-
 // Get initials from province name (e.g., "Sulawesi Utara" -> "SU")
 function getInitials(name: string): string {
   return name
@@ -17,9 +15,6 @@ function getInitials(name: string): string {
     .map((word) => word.charAt(0).toUpperCase())
     .join("");
 }
-
-// Track which stories have been prefetched
-const prefetchedStories = new Set<string>();
 
 export default function DashboardMap() {
   const [geoData, setGeoData] = useState<FeatureCollection | null>(null);
@@ -30,19 +25,6 @@ export default function DashboardMap() {
       .then((res) => res.json())
       .then((data) => setGeoData(data))
       .catch((err) => console.error("Error loading GeoJSON", err));
-  }, []);
-
-  // Prefetch story when province with story is hovered
-  const handlePrefetch = useCallback((storySlug: string) => {
-    if (!prefetchedStories.has(storySlug)) {
-      prefetchedStories.add(storySlug);
-      // Prefetch the JS module
-      prefetchStoryModule(storySlug);
-      // Preload critical assets in background
-      preloadStoryAssets(storySlug).catch(() => {
-        // Silently fail, will retry on game start
-      });
-    }
   }, []);
 
   if (!geoData) {
@@ -173,7 +155,6 @@ export default function DashboardMap() {
           onEachFeature={(feature, layer) => {
             const stateName = feature?.properties?.state;
             const hasStory = !!provinceStoryMap[stateName];
-            const storySlug = provinceStoryMap[stateName];
             layer.on({
                 click: (e) => {
                    handleProvinceSelect(stateName, [e.latlng.lat, e.latlng.lng]);
@@ -186,10 +167,6 @@ export default function DashboardMap() {
                         fillColor: hasStory ? "#4a231b" : "#2a1410",
                     });
                     layer.bringToFront();
-                    // Prefetch story assets when hovering over province with story
-                    if (storySlug) {
-                      handlePrefetch(storySlug);
-                    }
                 },
                 mouseout: (e) => {
                     const layer = e.target;
