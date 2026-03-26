@@ -183,7 +183,7 @@ export default async function DashboardPage() {
       {/* Stats Cards Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 mb-8 md:mb-10">
         {/* Total Score */}
-        <div className="relative p-4 md:p-6 bg-[#0D0907] border border-transparent group min-h-[120px] md:min-h-[140px]">
+        <div className="relative p-4 md:p-6 bg-[#0D0907] border border-transparent group min-h-30 md:min-h-35">
           {/* Corner brackets */}
           <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
           <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
@@ -202,7 +202,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* Level */}
-        <div className="relative p-4 md:p-6 bg-[#0D0907] border border-transparent group min-h-[120px] md:min-h-[140px]">
+        <div className="relative p-4 md:p-6 bg-[#0D0907] border border-transparent group min-h-30 md:min-h-35">
           {/* Corner brackets */}
           <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
           <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
@@ -231,7 +231,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* Stories Completed */}
-        <div className="relative p-4 md:p-6 bg-[#0D0907] border border-transparent group min-h-[120px] md:min-h-[140px]">
+        <div className="relative p-4 md:p-6 bg-[#0D0907] border border-transparent group min-h-30 md:min-h-35">
           {/* Corner brackets */}
           <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
           <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
@@ -249,7 +249,7 @@ export default async function DashboardPage() {
         </div>
 
         {/* Knowledge Unlocked */}
-        <div className="relative p-4 md:p-6 bg-[#0D0907] border border-transparent group min-h-[120px] md:min-h-[140px]">
+        <div className="relative p-4 md:p-6 bg-[#0D0907] border border-transparent group min-h-30 md:min-h-35">
           {/* Corner brackets */}
           <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
           <div className="absolute top-0 right-0 w-3 h-3 border-r border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
@@ -339,7 +339,7 @@ export default async function DashboardPage() {
                   className="flex items-start gap-3 pb-3 md:pb-4 border-b border-gray-800/50 last:border-0 last:pb-0"
                 >
                   <div
-                    className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${
+                    className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${
                       activity.status === "completed"
                         ? "bg-green-500"
                         : "bg-yellow-500"

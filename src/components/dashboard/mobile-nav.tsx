@@ -8,6 +8,7 @@ import {
   LayoutDashboard,
   Map,
   BookMarked,
+  MessageCircle,
   User,
   LogOut,
   Menu,
@@ -36,6 +37,11 @@ const menuItems: MenuItem[] = [
     label: "Koleksi",
     icon: BookMarked,
     href: "/dashboard/collection",
+  },
+  {
+    label: "Chatbot",
+    icon: MessageCircle,
+    href: "/dashboard/chat",
   },
 ];
 
@@ -117,7 +123,7 @@ export function MobileNav() {
                       : "text-[#9A8A7A] hover:bg-[#1A1410] hover:text-[#F5F0EB]"
                   )}
                 >
-                  <Icon className="h-5 w-5 flex-shrink-0" />
+                  <Icon className="h-5 w-5 shrink-0" />
                   <span>{item.label}</span>
                 </Link>
               );
@@ -142,10 +148,10 @@ export function MobileNav() {
                 <img
                   src={session.user.avatarUrl || session.user.image || ""}
                   alt={session.user.name || "User"}
-                  className="h-8 w-8 rounded-full object-cover flex-shrink-0"
+                  className="h-8 w-8 rounded-full object-cover shrink-0"
                 />
               ) : (
-                <div className="h-8 w-8 rounded-full bg-gray-800 flex items-center justify-center flex-shrink-0">
+                <div className="h-8 w-8 rounded-full bg-gray-800 flex items-center justify-center shrink-0">
                   <User className="h-4 w-4 text-gray-400" />
                 </div>
               )}
@@ -173,7 +179,7 @@ export function MobileNav() {
                 "text-[#9A8A7A] hover:bg-red-950/30 hover:text-red-400"
               )}
             >
-              <LogOut className="h-5 w-5 flex-shrink-0" />
+              <LogOut className="h-5 w-5 shrink-0" />
               <span>Logout</span>
             </button>
           </div>

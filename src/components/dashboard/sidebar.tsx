@@ -68,7 +68,7 @@ export function Sidebar() {
 
   return (
     <TooltipProvider delay={0}>
-      <div className="relative flex-shrink-0 hidden md:block">
+      <div className="relative shrink-0 hidden md:block">
         <aside
           className={cn(
             "sticky top-0 h-screen flex flex-col border-r",
