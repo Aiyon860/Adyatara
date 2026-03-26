@@ -35,7 +35,7 @@ export default function RegisterPage() {
       {/* Right side - Form */}
       <div className="w-full md:w-[55%] flex flex-col justify-center px-8 md:px-24 py-12 relative">
         <div className="w-full max-w-md mx-auto">
-          <div className="mb-14 flex items-center gap-4">
+          <div className="mb-14 hidden md:flex items-center gap-4">
             <div className="w-8 h-8 border border-gray-600"></div>
             <span className="text-[11px] tracking-[0.4em] font-serif text-gray-300 uppercase">
               ADYATARA

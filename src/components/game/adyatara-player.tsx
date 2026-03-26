@@ -52,6 +52,17 @@ function GamePlayer({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (liveGameRef.current) {
+        liveGameRef.current.game.dispose();
+        liveGameRef.current = null;
+      }
+    };
+  }, []);
+
+  // Configure game immediately
   useEffect(() => {
     game.configure({
       dialog: AdyataraDialog,
@@ -123,7 +134,7 @@ function GamePlayer({
               {storyMeta.title}
             </h2>
             <p className="text-sm mt-1 text-white">
-              Tekan "spasi" untuk memulai/melanjutkan cerita
+              Tekan &quot;spasi&quot; untuk memulai/melanjutkan cerita
             </p>
           </div>
 
@@ -173,7 +184,7 @@ function GamePlayer({
               variant="destructive"
               onClick={() => {
                 liveGameRef.current?.game.dispose();
-                router.push("/dashboard");
+                router.push("/explore");
               }}
               className="rounded-none tracking-[0.2em] uppercase text-xs"
             >
@@ -191,12 +202,19 @@ function GamePlayer({
           liveGameRef.current = liveGame;
           if (!startedRef.current) {
             startedRef.current = true;
+
+            // Start new game
             liveGame.newGame();
             const gameNs = Storable.createNamespace("game", {
               score: 0,
               ending: "",
             });
             storable.setNamespace("game", gameNs);
+
+            // Auto-trigger space key after a short delay to continue the game
+            setTimeout(() => {
+              window.dispatchEvent(new KeyboardEvent("keydown", { key: " " }));
+            }, 300);
           }
         }}
         onEnd={(ctx) => handleEnd(ctx)}
@@ -210,14 +228,33 @@ function GamePlayer({
 
 export function AdyataraPlayer() {
   const searchParams = useSearchParams();
-  const storySlug = searchParams.get("story");
   const router = useRouter();
+  const storySlug = searchParams.get("story");
   const [storyData, setStoryData] = useState<{
     story: Story;
     meta: StoryMeta;
   } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [mountKey, setMountKey] = useState(0);
+  const [showRefreshDialog, setShowRefreshDialog] = useState(false);
+
+  // Always show popup on mount
+  useEffect(() => {
+    if (storySlug && !loading) {
+      setShowRefreshDialog(true);
+    }
+  }, [storySlug, loading]);
+
+  // Force show popup after a delay as fallback
+  useEffect(() => {
+    if (!loading && storySlug) {
+      const timer = setTimeout(() => {
+        setShowRefreshDialog(true);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [storySlug, loading]);
 
   useEffect(() => {
     async function init() {
@@ -234,7 +271,10 @@ export function AdyataraPlayer() {
           setLoading(false);
           return;
         }
+
         setStoryData({ story: data.default, meta: data.storyMeta });
+        // Force remount of GameProviders to ensure clean state
+        setMountKey((prev) => prev + 1);
       } catch {
         setError("Gagal memuat cerita");
       } finally {
@@ -264,7 +304,7 @@ export function AdyataraPlayer() {
           {error || "Cerita tidak ditemukan"}
         </h2>
         <button
-          onClick={() => router.push("/dashboard")}
+          onClick={() => router.push("/explore")}
           className="px-6 py-2 border border-[#D96B4A] text-[#D96B4A] hover:bg-[#D96B4A]/10 transition-colors"
         >
           Kembali ke Peta
@@ -275,13 +315,55 @@ export function AdyataraPlayer() {
 
   return (
     <div style={{ width: "100vw", height: "100vh", background: "#0A0705" }}>
-      <GameProviders>
-        <GamePlayer
-          story={storyData.story}
-          storySlug={storySlug!}
-          storyMeta={storyData.meta}
-        />
-      </GameProviders>
+      {/* Refresh Overlay - shown EVERY time user enters VN */}
+      {showRefreshDialog && (
+        <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/90 pointer-events-auto">
+          <div className="bg-[#0A0705] border border-gray-800 p-6 md:p-8 max-w-md w-full mx-4 relative pointer-events-auto">
+            {/* Close button - matching pause dialog style */}
+            <button
+              type="button"
+              onClick={() => setShowRefreshDialog(false)}
+              className="absolute top-3 right-3 text-[#D96B4A] hover:text-[#E8724A] hover:bg-[#D96B4A]/10 p-1 pointer-events-auto"
+            >
+              ✕
+            </button>
+
+            {/* Corner brackets */}
+            <div className="absolute top-0 left-0 w-2 h-2 border-l border-t border-gray-700/50" />
+            <div className="absolute top-0 right-0 w-2 h-2 border-r border-t border-gray-700/50" />
+            <div className="absolute bottom-0 left-0 w-2 h-2 border-l border-b border-gray-700/50" />
+            <div className="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-gray-700/50" />
+
+            <div className="flex items-center gap-3 mb-4">
+              <div className="h-4 w-1 bg-orange-500 shrink-0" />
+              <h2 className="font-serif text-base md:text-lg text-white">
+                Refresh Diperlukan
+              </h2>
+            </div>
+
+            <p className="text-gray-400 text-sm leading-relaxed mb-4">
+              Untuk memastikan visual novel dapat berjalan dengan baik, silakan
+              refresh halaman browser secara manual (Ctrl+R atau F5).
+            </p>
+
+            <p className="text-gray-500 text-xs">
+              Setelah di-refresh, klik tombol X di atas untuk menutup popup ini.
+            </p>
+          </div>
+        </div>
+      )}
+
+      <div
+        className={showRefreshDialog ? "pointer-events-none opacity-50" : ""}
+      >
+        <GameProviders key={`${storySlug}-${mountKey}`}>
+          <GamePlayer
+            story={storyData.story}
+            storySlug={storySlug!}
+            storyMeta={storyData.meta}
+          />
+        </GameProviders>
+      </div>
     </div>
   );
 }

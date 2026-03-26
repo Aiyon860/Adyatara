@@ -8,6 +8,13 @@ import { provinceStoryMap, storyInfoMap } from "@/stories";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { X } from "lucide-react";
+// Get initials from province name (e.g., "Sulawesi Utara" -> "SU")
+function getInitials(name: string): string {
+  return name
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase())
+    .join("");
+}
 
 export default function DashboardMap() {
   const [geoData, setGeoData] = useState<FeatureCollection | null>(null);
@@ -50,7 +57,7 @@ export default function DashboardMap() {
         }}
       >
         {selectedProvince && (
-          <Popup position={selectedProvince.position} closeButton={false} className="custom-map-popup mt-[-20px]">
+          <Popup position={selectedProvince.position} closeButton={false} className="custom-map-popup -mt-5">
             <div className="relative p-6 w-80 bg-[#0D0907] border border-transparent shadow-[0_10px_40px_rgba(0,0,0,0.8)] text-[#f4e1d1] transition-all duration-300 animate-in fade-in zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=closed]:zoom-out-95 group">
               {/* Corner brackets matching landing page */}
               <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 transition-colors" />
@@ -69,16 +76,24 @@ export default function DashboardMap() {
                 <div className="flex flex-col">
                   {selectedProvince.storySlug && selectedStoryInfo ? (
                     <>
-                      <div className="mb-4 inline-flex p-3 border border-gray-800/80 rounded-sm relative self-start">
-                         <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
-                         <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
-                         <Image 
-                           src={selectedStoryInfo.coverImage} 
-                           alt="" 
-                           width={20} 
-                           height={20} 
-                           className="object-cover rounded-sm w-5 h-5 opacity-90"
-                         />
+                      <div className="mb-4 inline-flex border border-gray-800/80 rounded-sm relative self-start overflow-hidden">
+                         <div className="absolute top-0 left-0 w-1.5 h-1.5 border-l border-t border-gray-600 z-10"></div>
+                         <div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-r border-b border-gray-600 z-10"></div>
+                         {selectedStoryInfo.coverImage ? (
+                           <Image 
+                             src={selectedStoryInfo.coverImage} 
+                             alt="" 
+                             width={56} 
+                             height={56} 
+                             className="object-cover w-14 h-14"
+                           />
+                         ) : (
+                           <div className="w-14 h-14 bg-linear-to-br from-[#2a1a14] to-[#1a0f0a] flex items-center justify-center">
+                             <span className="text-[#D96B4A]/60 text-base font-serif">
+                               {getInitials(selectedProvince.name)}
+                             </span>
+                           </div>
+                         )}
                       </div>
                       
                       <h3 className="text-lg font-serif text-white mb-3 tracking-wide">
@@ -100,10 +115,14 @@ export default function DashboardMap() {
                     </>
                   ) : (
                     <>
-                       <div className="mb-4 inline-flex p-3 border border-gray-800/80 rounded-sm relative self-start">
-                         <div className="absolute top-0 left-0 w-1 h-1 border-l border-t border-gray-600"></div>
-                         <div className="absolute bottom-0 right-0 w-1 h-1 border-r border-b border-gray-600"></div>
-                         <div className="w-5 h-5 bg-gray-800 rounded-sm opacity-50" />
+                       <div className="mb-4 inline-flex border border-gray-800/80 rounded-sm relative self-start overflow-hidden">
+                         <div className="absolute top-0 left-0 w-1.5 h-1.5 border-l border-t border-gray-600 z-10"></div>
+                         <div className="absolute bottom-0 right-0 w-1.5 h-1.5 border-r border-b border-gray-600 z-10"></div>
+                         <div className="w-14 h-14 bg-linear-to-br from-[#2a1a14] to-[#1a0f0a] flex items-center justify-center">
+                           <span className="text-gray-600 text-base font-serif">
+                             {getInitials(selectedProvince.name)}
+                           </span>
+                         </div>
                       </div>
                       
                       <h3 className="text-lg font-serif text-white mb-3 tracking-wide">
