@@ -3,11 +3,6 @@ import { persist } from "zustand/middleware";
 import type { Song } from "@/lib/music-data";
 import { getRandomSong } from "@/lib/music-data";
 
-interface Position {
-  x: number;
-  y: number;
-}
-
 interface AudioState {
   // Playback state
   currentSong: Song | null;
@@ -19,7 +14,6 @@ interface AudioState {
 
   // UI state
   isMinimized: boolean;
-  position: Position;
 
   // Play history for smart shuffle (stores last 3-4 song IDs)
   playHistory: string[];
@@ -31,7 +25,6 @@ interface AudioState {
   setCurrentTime: (time: number) => void;
   setDuration: (duration: number) => void;
   setIsMinimized: (minimized: boolean) => void;
-  setPosition: (position: Position) => void;
   
   // Playback controls
   play: () => void;
@@ -51,17 +44,6 @@ interface AudioState {
 
 const HISTORY_LIMIT = 4; // Keep last 4 songs in history
 
-// Safe default position that works on SSR (bottom-right)
-const getDefaultPosition = (): Position => {
-  if (typeof window !== "undefined") {
-    return { 
-      x: window.innerWidth - 340, // 320px width + 20px margin
-      y: window.innerHeight - 280 
-    };
-  }
-  return { x: 500, y: 500 }; // Fallback for SSR
-};
-
 export const useAudioStore = create<AudioState>()(
   persist(
     (set, get) => ({
@@ -73,7 +55,6 @@ export const useAudioStore = create<AudioState>()(
       duration: 0,
       seekTime: null,
       isMinimized: false,
-      position: getDefaultPosition(),
       playHistory: [],
 
       // Setters
@@ -83,7 +64,6 @@ export const useAudioStore = create<AudioState>()(
       setCurrentTime: (time) => set({ currentTime: time }),
       setDuration: (duration) => set({ duration: duration }),
       setIsMinimized: (minimized) => set({ isMinimized: minimized }),
-      setPosition: (position) => set({ position }),
 
       // Playback controls
       play: () => set({ isPlaying: true }),
@@ -153,7 +133,6 @@ export const useAudioStore = create<AudioState>()(
         volume: state.volume,
         currentTime: state.currentTime,
         isMinimized: state.isMinimized,
-        position: state.position,
         playHistory: state.playHistory,
         // Don't persist isPlaying, seekTime (always start paused)
       }),
