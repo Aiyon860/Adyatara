@@ -155,6 +155,9 @@ export default function ProfileEditForm() {
 
   return (
     <div className="min-h-screen bg-[#0A0705] text-[#F5F0EB] p-6 md:p-8">
+      {/* Spacer for mobile nav */}
+      <div className="md:hidden h-14" />
+      
       {/* Header */}
       <div className="mb-10">
         <Link
@@ -188,7 +191,7 @@ export default function ProfileEditForm() {
           <Form {...profileForm}>
             <form onSubmit={profileForm.handleSubmit(onSubmitProfile)} className="space-y-6">
               {/* Avatar Upload */}
-              <div className="flex items-start gap-6 mb-8">
+              <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6 mb-8">
                 <div className="relative">
                   {avatarPreview ? (
                     <img
@@ -318,11 +321,11 @@ export default function ProfileEditForm() {
                 )}
               />
 
-              <div className="flex gap-4 pt-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4 w-full sm:w-auto">
                 <button
                   type="submit"
                   disabled={isPending}
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#E86B52] hover:bg-[#D96B4A] text-white text-xs font-semibold rounded-none transition-all tracking-[0.2em] uppercase disabled:opacity-50"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-[#E86B52] hover:bg-[#D96B4A] text-white text-xs font-semibold rounded-none transition-all tracking-[0.2em] uppercase disabled:opacity-50"
                 >
                   {isPending ? "MENYIMPAN..." : "SIMPAN PERUBAHAN"}
                   {!isPending && <ArrowRight className="w-4 h-4" />}
@@ -330,7 +333,7 @@ export default function ProfileEditForm() {
                 <button
                   type="button"
                   onClick={() => router.back()}
-                  className="px-8 py-4 border border-gray-800 text-gray-400 hover:text-white hover:border-gray-600 text-xs rounded-none transition-all tracking-[0.2em] uppercase"
+                  className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 border border-gray-800 text-gray-400 hover:text-white hover:border-gray-600 text-xs rounded-none transition-all tracking-[0.2em] uppercase"
                 >
                   BATAL
                 </button>

@@ -43,6 +43,9 @@ export default async function CollectionPage() {
 
   return (
     <div className="min-h-screen bg-[#0A0705] text-[#F5F0EB] p-6 md:p-8">
+      {/* Spacer for mobile nav */}
+      <div className="md:hidden h-14" />
+      
       {/* Header */}
       <div className="mb-10">
         <div className="flex items-center gap-4 mb-4">
