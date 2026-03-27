@@ -80,6 +80,9 @@ function GamePlayer({
       menu: AdyataraMenu,
       defaultTextColor: "#F5F0EB",
       defaultNametagColor: "#D96B4A",
+      // Keep input scoped to player to avoid click/key carry-over
+      // from previous UI interactions (e.g. menu choice -> next scene).
+      useWindowListener: false,
     });
   }, [game]);
 
@@ -131,7 +134,12 @@ function GamePlayer({
       {/* Story title overlay */}
       <div className="absolute top-0 left-0 right-0 z-30 p-6 md:p-8 pointer-events-none">
         <div className="flex items-start justify-between">
-          <div>
+          <div className="relative">
+            {/* Darker at top, fades out toward bottom for readability */}
+            <div className="absolute -left-6 -right-20 -top-6 -bottom-10 rounded-lg bg-gradient-to-b from-black/80 via-black/52 to-transparent blur-2xl [mask-image:linear-gradient(180deg,black_0%,black_72%,transparent_100%)]" />
+            <div className="absolute -left-4 -right-12 -top-3 h-14 rounded-md bg-black/45 blur-lg" />
+
+            <div className="relative">
             <div className="flex items-center gap-x-2 mb-1">
               <div className="h-4 w-1 bg-orange-500" />
               <p className="text-xs tracking-[0.2em] text-[#D96B4A] font-extrabold uppercase">
@@ -145,6 +153,7 @@ function GamePlayer({
             <p className="text-sm mt-1 text-white">
               Tekan &quot;spasi&quot; untuk memulai/melanjutkan cerita
             </p>
+            </div>
           </div>
 
           <Button

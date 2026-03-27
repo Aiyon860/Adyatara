@@ -82,7 +82,7 @@ export default async function ExplorePage() {
                 <Trophy className="w-5 h-5 md:w-6 md:h-6 text-[#D96B4A]" strokeWidth={2} />
                 <div>
                   <p className="text-[10px] md:text-[11px] tracking-[0.2em] text-gray-500 uppercase mb-0.5">
-                    SKOR TOTAL
+                    KARMA TOTAL
                   </p>
                   <p className="text-lg md:text-xl font-medium text-white">{score}</p>
                 </div>

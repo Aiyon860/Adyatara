@@ -30,7 +30,7 @@ export default async function QuizListPage({ searchParams }: QuizListPageProps) 
         select: { title: true, coverImage: true, region: true },
       },
       questions: {
-        select: { id: true }
+        select: { id: true, imageUrl: true }
       },
       attempts: {
         where: { userId: session.user.id }
@@ -56,11 +56,21 @@ export default async function QuizListPage({ searchParams }: QuizListPageProps) 
       ? quiz.attempts.reduce((max, attempt) => attempt.score > max.score ? attempt : max, quiz.attempts[0])
       : null;
 
+    const thumbnailImage =
+      quiz.story?.coverImage ??
+      quiz.questions.find((question) => question.imageUrl)?.imageUrl ??
+      null;
+
     return (
       <div key={quiz.id} className="relative bg-[#0a0604] border border-[#2E2318] group flex flex-col hover:border-[#D96B4A]/50 transition-colors shadow-[0_0_15px_rgba(0,0,0,0.5)]">
         <div className="relative h-40 w-full bg-[#1A1410] border-b border-[#2E2318] overflow-hidden">
-          {quiz.story?.coverImage ? (
-            <Image src={quiz.story.coverImage} alt={quiz.story.title} fill className="object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" />
+          {thumbnailImage ? (
+            <Image
+              src={thumbnailImage}
+              alt={quiz.story?.title ?? quiz.title}
+              fill
+              className="object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
+            />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">
               <Sparkles className="w-8 h-8 text-[#2E2318]" />
@@ -69,7 +79,7 @@ export default async function QuizListPage({ searchParams }: QuizListPageProps) 
           {bestAttempt && (
             <div className="absolute top-3 right-3 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 flex items-center gap-2 backdrop-blur-sm shadow-[0_0_10px_rgba(16,185,129,0.2)]">
               <CheckCircle2 className="w-3 h-3 text-emerald-400" />
-              <span className="text-[10px] text-emerald-400 font-bold tracking-widest">{bestAttempt.score} SKOR</span>
+              <span className="text-[10px] text-emerald-400 font-bold tracking-widest">{bestAttempt.score} KARMA</span>
             </div>
           )}
         </div>
