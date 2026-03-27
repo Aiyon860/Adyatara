@@ -57,18 +57,6 @@ function GamePlayer({
       if (liveGameRef.current) {
         liveGameRef.current.game.dispose();
         liveGameRef.current = null;
-        try {
-          const eng = (game as any)?.engine;
-          if (eng && eng.audio) {
-            eng.audio.destroy?.();
-            const ch =
-              eng.audio.masterChannel?.getChannel?.("voice") ||
-              eng.audio.getChannel?.("voice");
-            if (ch) ch.remove?.();
-          }
-        } catch {
-          // Ignore teardown errors during route transitions.
-        }
       }
     };
   }, []);

@@ -2,17 +2,39 @@ import { PrismaClient } from "@/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import pg from "pg";
 
-const connectionString = process.env.DATABASE_URL;
-
 const globalForPrisma = globalThis as unknown as {
   prisma_v2: PrismaClient | undefined;
 };
 
+function buildConnectionString(rawUrl: string): string {
+  try {
+    const url = new URL(rawUrl);
+    const host = url.hostname;
+    const isSupabaseHost =
+      host.includes("supabase.co") || host.includes("pooler.supabase.com");
+
+    if (isSupabaseHost) {
+      // Keep TLS enabled, but align behavior with libpq for Supabase pooled/direct URLs.
+      if (!url.searchParams.get("sslmode")) {
+        url.searchParams.set("sslmode", "require");
+      }
+      if (!url.searchParams.get("uselibpqcompat")) {
+        url.searchParams.set("uselibpqcompat", "true");
+      }
+    }
+
+    return url.toString();
+  } catch {
+    return rawUrl;
+  }
+}
+
 function createPrismaClient(): PrismaClient {
-  if (!connectionString) {
+  if (!process.env.DATABASE_URL) {
     throw new Error("DATABASE_URL environment variable is not set");
   }
 
+  const connectionString = buildConnectionString(process.env.DATABASE_URL);
   const pool = new pg.Pool({ connectionString });
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const adapter = new PrismaPg(pool as any);

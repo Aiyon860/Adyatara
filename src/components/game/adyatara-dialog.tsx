@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Dialog, Nametag, Texts, useVoiceState } from "narraleaf-react";
 
 function waitForFirstUserGesture(): Promise<void> {
@@ -29,9 +29,21 @@ function waitForFirstUserGesture(): Promise<void> {
  */
 function VoiceAutoPlay() {
   const { voice, playVoice } = useVoiceState();
+  const lastVoiceKeyRef = useRef<string>("");
+  const lastRunAtRef = useRef<number>(0);
 
   useEffect(() => {
     if (!voice) return;
+
+    const now = Date.now();
+    const voiceKey = String(voice);
+
+    // Prevent duplicate auto-play calls for the same sentence during quick re-renders.
+    if (lastVoiceKeyRef.current === voiceKey && now - lastRunAtRef.current < 500) {
+      return;
+    }
+    lastVoiceKeyRef.current = voiceKey;
+    lastRunAtRef.current = now;
 
     let cancelled = false;
 
@@ -41,6 +53,11 @@ function VoiceAutoPlay() {
       } catch (error) {
         const message =
           error instanceof Error ? error.message : "Unknown audio error";
+
+        // Ignore duplicate channel initialization race.
+        if (message.includes("Channel \"voice\" already exists")) {
+          return;
+        }
 
         if (!message.includes("Audio context is not ready") || cancelled) {
           return;

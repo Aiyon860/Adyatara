@@ -8,7 +8,8 @@ import {
   LayoutDashboard,
   Map,
   BookMarked,
-  MessageCircle,
+  BookText,
+  BotMessageSquare,
   User,
   LogOut,
   Menu,
@@ -25,23 +26,28 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
   {
-    label: "Dashboard",
+    label: "Beranda",
     icon: LayoutDashboard,
     href: "/dashboard",
   },
   {
-    label: "Cerita Rakyat",
+    label: "Kisah Nusantara",
     icon: Map,
     href: "/explore",
   },
   {
-    label: "Koleksi",
+    label: "Peti Pusaka",
     icon: BookMarked,
     href: "/dashboard/collection",
   },
   {
-    label: "Chatbot",
-    icon: MessageCircle,
+    label: "Uji Wawasan",
+    icon: BookText,
+    href: "/dashboard/quiz",
+  },
+  {
+    label: "Pemandu Budaya",
+    icon: BotMessageSquare,
     href: "/dashboard/chat",
   },
 ];
@@ -102,7 +108,7 @@ export function MobileNav() {
       {/* Mobile Menu Drawer */}
       <div
         className={cn(
-          "md:hidden fixed top-14 right-0 bottom-0 z-30 w-72 bg-[#0D0A08] border-l border-[#2E2318]",
+          "md:hidden fixed top-14 right-0 bottom-0 z-30 w-72 bg-[#0a0604] border-l border-[#2E2318]",
           "transform transition-transform duration-300 ease-in-out",
           isOpen ? "translate-x-0" : "translate-x-full"
         )}
@@ -120,13 +126,16 @@ export function MobileNav() {
                   href={item.href}
                   onClick={() => setIsOpen(false)}
                   className={cn(
-                    "flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200",
-                    "text-sm font-medium",
+                    "relative flex items-center gap-3 px-4 py-3 border border-transparent transition-all duration-200",
+                    "text-sm font-serif tracking-wide",
                     active
-                      ? "bg-[#E8724A]/10 text-[#E8724A]"
-                      : "text-[#9A8A7A] hover:bg-[#1A1410] hover:text-[#F5F0EB]"
+                      ? "bg-[#1A1410] border-[#D96B4A]/30 text-[#D96B4A]"
+                      : "text-[#9A8A7A] hover:bg-[#1A1410] hover:border-[#2E2318] hover:text-[#F5F0EB]"
                   )}
                 >
+                  {active && (
+                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-7 bg-[#D96B4A] shadow-[0_0_8px_rgba(217,107,74,0.6)]" />
+                  )}
                   <Icon className="h-5 w-5 shrink-0" />
                   <span>{item.label}</span>
                 </Link>
@@ -141,11 +150,11 @@ export function MobileNav() {
               href="/dashboard/profile"
               onClick={() => setIsOpen(false)}
               className={cn(
-                "flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200",
-                "text-sm font-medium",
+                "flex items-center gap-3 px-4 py-3 border border-transparent transition-all duration-200",
+                "text-sm font-serif",
                 pathname.startsWith("/dashboard/profile")
-                  ? "bg-[#E8724A]/10 text-[#E8724A]"
-                  : "text-[#9A8A7A] hover:bg-[#1A1410] hover:text-[#F5F0EB]"
+                  ? "bg-[#1A1410] border-[#D96B4A]/30 text-[#D96B4A]"
+                  : "text-[#9A8A7A] hover:bg-[#1A1410] hover:border-[#2E2318] hover:text-[#F5F0EB]"
               )}
             >
               {session?.user?.avatarUrl || session?.user?.image ? (
@@ -178,9 +187,9 @@ export function MobileNav() {
                 signOut({ callbackUrl: "/" });
               }}
               className={cn(
-                "w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200",
-                "text-sm font-medium",
-                "text-[#9A8A7A] hover:bg-red-950/30 hover:text-red-400"
+                "w-full flex items-center gap-3 px-4 py-3 border border-transparent transition-all duration-200",
+                "text-sm font-serif",
+                "text-[#9A8A7A] hover:bg-[#1A1410] hover:border-red-900/30 hover:text-red-400"
               )}
             >
               <LogOut className="h-5 w-5 shrink-0" />

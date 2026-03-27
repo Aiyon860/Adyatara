@@ -333,7 +333,7 @@ export default async function DashboardPage() {
                   <div className="flex-1 min-w-0 py-1">
                     <p className="text-sm md:text-base font-serif text-[#F5F0EB] truncate drop-shadow-sm">
                       {activity.status === "completed" ? "Tamat" : "Menyelusuri"}{" "}
-                      <span className="text-[#D96B4A]">&quot;{activity.story.title}&quot;quot;{activity.story.title}&quot;{activity.story.title}&quot;quot;quot;{activity.story.title}&quot;{activity.story.title}&quot;quot;{activity.story.title}&quot;{activity.story.title}&quot;quot;quot;</span>
+                      <span className="text-[#D96B4A]">&quot;{activity.story.title}&quot;</span>
                     </p>
                     <div className="flex items-center gap-2 mt-1.5">
                       <span className="text-[10px] text-[#9A8A7A] tracking-widest uppercase">
