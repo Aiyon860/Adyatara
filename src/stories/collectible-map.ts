@@ -32,14 +32,20 @@ export const storyCollectibleMap: Record<string, Record<string, string[]>> = {
   },
   "danau-tondano": {
     best: [
+      "Danau Tondano",
+      "Watu Pinabetengan",
       "Monumen Yesus Memberkati",
       "Rumah Woloan",
       "Pedang Bara Sangihe",
     ],
     neutral: [
+      "Kolintang",
+      "Cakalang Fufu",
       "Alat Musik Kolintang",
     ],
     bad: [
+      "Pakaian Adat Minahasa",
+      "Tinutuan (Bubur Manado)",
       "Tari Kabasaran",
       "Tinutuan",
     ],

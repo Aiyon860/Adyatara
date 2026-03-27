@@ -43,7 +43,7 @@ export default async function ExplorePage() {
       </div>
 
       {/* UI overlay layer */}
-      <div className="relative w-full h-full flex flex-col pointer-events-none">
+      <div className="relative z-20 w-full h-full flex flex-col pointer-events-none">
         {/* Header */}
         <div className="flex items-center justify-between p-2 sm:p-4 lg:p-8 w-full mr-auto ml-auto lg:px-12">
           {/* Left - Back Button */}
