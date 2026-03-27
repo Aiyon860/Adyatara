@@ -29,18 +29,18 @@ export function Navbar() {
 
                 {/* Desktop Navigation */}
                 <nav className="hidden md:flex items-center gap-12 flex-1 mx-12 justify-center">
-                    <Link href="/" className="text-[#E86B52] hover:text-[#D96B4A] transition-colors text-sm font-semibold tracking-wide">
+                    <Link href="/#beranda" className="text-[#E86B52] hover:text-[#D96B4A] transition-colors text-sm font-semibold tracking-wide">
                         Home
                     </Link>
-                    <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm font-light tracking-wide">
+                    <Link href="/#fitur" className="text-gray-400 hover:text-white transition-colors text-sm font-light tracking-wide">
                         Fitur
-                    </a>
-                    <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm font-light tracking-wide">
-                        Karakter
-                    </a>
-                    <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm font-light tracking-wide">
+                    </Link>
+                    <Link href="/#cerita" className="text-gray-400 hover:text-white transition-colors text-sm font-light tracking-wide">
                         Cerita
-                    </a>
+                    </Link>
+                    <Link href="/#tentang" className="text-gray-400 hover:text-white transition-colors text-sm font-light tracking-wide">
+                        Tentang
+                    </Link>
                 </nav>
 
                 {/* Right Actions - Tombol Masuk saja */}
@@ -65,21 +65,21 @@ export function Navbar() {
             {/* Mobile Menu */}
             {isOpen && (
                 <div className="md:hidden border-t border-border bg-card p-4 space-y-3">
-                    <Link href="/" className="block text-secondary hover:text-primary py-2">
+                    <Link href="/#beranda" className="block text-secondary hover:text-primary py-2" onClick={() => setIsOpen(false)}>
                         HOME
                     </Link>
-                    <a href="#" className="block text-muted hover:text-primary py-2">
+                    <Link href="/#fitur" className="block text-muted hover:text-primary py-2" onClick={() => setIsOpen(false)}>
                         FITUR
-                    </a>
-                    <a href="#" className="block text-muted hover:text-primary py-2">
-                        KARAKTER
-                    </a>
-                    <a href="#" className="block text-muted hover:text-primary py-2">
+                    </Link>
+                    <Link href="/#cerita" className="block text-muted hover:text-primary py-2" onClick={() => setIsOpen(false)}>
                         CERITA
-                    </a>
+                    </Link>
+                    <Link href="/#tentang" className="block text-muted hover:text-primary py-2" onClick={() => setIsOpen(false)}>
+                        TENTANG
+                    </Link>
                     
                     {/* Mobile menu - Tombol Masuk */}
-                    <Link href={masukHref} className="block text-primary hover:text-primary py-2 font-semibold">
+                    <Link href={masukHref} className="block text-primary hover:text-primary py-2 font-semibold" onClick={() => setIsOpen(false)}>
                         MASUK
                     </Link>
                 </div>

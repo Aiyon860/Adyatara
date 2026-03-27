@@ -1,8 +1,21 @@
 import { auth } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
-import { writeFile } from "fs/promises";
-import { join } from "path";
-import { existsSync, mkdirSync } from "fs";
+
+const ALLOWED_MIME_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif",
+  "image/avif",
+];
+
+const MIME_EXTENSION_MAP: Record<string, string> = {
+  "image/jpeg": "jpg",
+  "image/png": "png",
+  "image/webp": "webp",
+  "image/gif": "gif",
+  "image/avif": "avif",
+};
 
 export async function POST(request: NextRequest) {
   try {
@@ -26,9 +39,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate file type
-    if (!file.type.startsWith("image/")) {
+    if (!ALLOWED_MIME_TYPES.includes(file.type)) {
       return NextResponse.json(
-        { success: false, error: "File must be an image" },
+        { success: false, error: "Format gambar tidak didukung" },
         { status: 400 }
       );
     }
@@ -41,26 +54,54 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const supabaseUrl =
+      process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    const bucket = process.env.SUPABASE_STORAGE_BUCKET || "avatars";
+
+    if (!supabaseUrl || !serviceRoleKey) {
+      return NextResponse.json(
+        {
+          success: false,
+          error:
+            "Konfigurasi Supabase Storage belum lengkap (SUPABASE_URL/SUPABASE_SERVICE_ROLE_KEY)",
+        },
+        { status: 500 }
+      );
+    }
+
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Generate unique filename
-    const timestamp = Date.now();
-    const fileExt = file.name.split(".").pop();
-    const filename = `${session.user.id}-${timestamp}.${fileExt}`;
+    // Generate unique object path per user
+    const fileExt = MIME_EXTENSION_MAP[file.type] || "jpg";
+    const objectPath = `avatars/${session.user.id}/${Date.now()}-${crypto.randomUUID()}.${fileExt}`;
+    const trimmedSupabaseUrl = supabaseUrl.replace(/\/$/, "");
 
-    // Ensure upload directory exists
-    const uploadDir = join(process.cwd(), "public", "uploads", "avatars");
-    if (!existsSync(uploadDir)) {
-      mkdirSync(uploadDir, { recursive: true });
+    const uploadResponse = await fetch(
+      `${trimmedSupabaseUrl}/storage/v1/object/${bucket}/${objectPath}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${serviceRoleKey}`,
+          apikey: serviceRoleKey,
+          "x-upsert": "true",
+          "Content-Type": file.type,
+        },
+        body: buffer,
+      }
+    );
+
+    if (!uploadResponse.ok) {
+      const errorText = await uploadResponse.text();
+      console.error("Supabase upload error:", errorText);
+      return NextResponse.json(
+        { success: false, error: "Gagal mengunggah avatar ke Supabase Storage" },
+        { status: 500 }
+      );
     }
 
-    // Save file
-    const filepath = join(uploadDir, filename);
-    await writeFile(filepath, buffer);
-
-    // Return URL
-    const url = `/uploads/avatars/${filename}`;
+    const url = `${trimmedSupabaseUrl}/storage/v1/object/public/${bucket}/${objectPath}`;
 
     return NextResponse.json({
       success: true,

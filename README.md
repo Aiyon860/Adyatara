@@ -347,6 +347,9 @@ npx @next/codemod@latest agents-md
 | `GOOGLE_CLIENT_ID` | Google OAuth client ID | - |
 | `GOOGLE_CLIENT_SECRET` | Google OAuth client secret | - |
 | `NEXT_PUBLIC_APP_URL` | Public app URL | `http://localhost:3000` |
+| `SUPABASE_URL` | Base URL project Supabase untuk akses Storage API | `https://[PROJECT_REF].supabase.co` |
+| `SUPABASE_SERVICE_ROLE_KEY` | Service role key untuk upload avatar server-side | - |
+| `SUPABASE_STORAGE_BUCKET` | Nama bucket public untuk avatar | `avatars` |
 | `OPENROUTER_API_KEY` | API key untuk AI chatbot | - |
 | `OPENROUTER_MODEL` | Model AI | `google/gemini-2.0-flash-lite-001` |
 

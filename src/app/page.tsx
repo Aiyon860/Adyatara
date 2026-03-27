@@ -1,30 +1,44 @@
 import Link from "next/link";
 import {
   BookOpen,
+  Gem,
+  Brain,
+  Music,
   Play,
   ArrowRight,
-  Wallpaper,
-  ScrollText,
+  BotMessageSquare,
 } from "lucide-react";
 
 const features = [
   {
-    title: "Naratif Interaktif",
+    title: "Visual Novel Legenda Nusantara",
     description:
-      "Pilihan ada di tanganmu. Setiap keputusan membawa alur berbeda — akankah kamu menjadi pahlawan atau legenda baru?",
+      "Rasakan cerita rakyat dalam format visual novel interaktif dengan pilihan bercabang, dialog hidup, dan ending yang berbeda.",
     icon: BookOpen,
   },
   {
-    title: "Visual Nusantara",
+    title: "Koleksi Artefak Legenda",
     description:
-      "Nikmati estetika budaya yang dikemas dengan visual modern, membawa keajaiban dongeng leluhur ke layar perangkatmu.",
-    icon: Wallpaper,
+      "Buka item unik dari tiap cerita dan ending. Semakin dalam petualanganmu, semakin langka koleksi budaya yang bisa kamu miliki.",
+    icon: Gem,
   },
   {
-    title: "Warisan Hidup",
+    title: "Sahabat Budaya AI",
     description:
-      "Pelajari nilai moral, sejarah, dan fakta unik di balik setiap legenda sambil bermain dan mengumpulkan poin pengetahuan.",
-    icon: ScrollText,
+      "Ngobrol langsung dengan chatbot kebudayaan untuk memahami makna simbol, adat, dan nilai moral dari setiap kisah Nusantara.",
+    icon: BotMessageSquare,
+  },
+  {
+    title: "Kuis Interaktif Nusantara",
+    description:
+      "Uji wawasanmu lewat quiz interaktif yang terhubung ke alur cerita, lalu naikkan skor pengetahuan budaya di setiap sesi.",
+    icon: Brain,
+  },
+  {
+    title: "Musik Daerah Otentik",
+    description:
+      "Temani perjalananmu dengan musik daerah Indonesia dan soundtrack cerita yang memperkuat suasana setiap adegan.",
+    icon: Music,
   },
 ];
 
@@ -63,6 +77,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-[#0A0705] text-[#F5F0EB]">
       {/* Hero Section */}
       <section
+        id="beranda"
         className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-cover bg-center pt-24"
         style={{
           backgroundImage:
@@ -151,7 +166,7 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-[#0A0705] relative">
+      <section id="fitur" className="py-20 bg-[#0A0705] relative">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="flex flex-col items-center mb-16">
             <div className="flex items-center gap-4 mb-4">
@@ -166,14 +181,16 @@ export default function HomePage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6">
             {features.map((feature, idx) => {
               const Icon = feature.icon;
+              const shouldCenterSecondRowStart =
+                features.length % 3 === 2 && idx === 3;
 
               return (
                 <div
                   key={idx}
-                  className="relative p-8 bg-[#0D0907] border border-transparent group min-h-[220px]"
+                  className={`relative p-8 bg-[#0D0907] border border-transparent group min-h-[220px] lg:col-span-2 ${shouldCenterSecondRowStart ? "lg:col-start-2" : ""}`}
                 >
                   {/* Corner brackets */}
                   <div className="absolute top-0 left-0 w-3 h-3 border-l border-t border-gray-800 group-hover:border-[#D96B4A]/60 transition-colors" />
@@ -200,7 +217,7 @@ export default function HomePage() {
       </section>
 
       {/* Stories Section */}
-      <section className="py-24 bg-[#0A0705] relative">
+      <section id="cerita" className="py-24 bg-[#0A0705] relative">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="flex flex-col items-center mb-16">
             <div className="flex items-center gap-4 mb-4">
@@ -261,6 +278,7 @@ export default function HomePage() {
 
       {/* CTA Section */}
       <section
+        id="tentang"
         className="py-24 bg-[#0A0705] relative overflow-hidden flex items-center min-h-[500px]"
         style={{
           backgroundImage:
