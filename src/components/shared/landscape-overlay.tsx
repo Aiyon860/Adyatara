@@ -1,117 +1,128 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Monitor, RotateCcw } from "lucide-react";
 
 /**
- * Overlay that prompts mobile/tablet users to rotate to landscape mode.
- * Only triggers on touch devices with viewport width < 1024px in portrait.
- * Desktop/laptops are never affected.
+ * Overlay that recommends desktop for the best visual novel experience.
+ * Triggers on touch devices with viewport width < 1024px in portrait mode.
+ * Desktop/laptops are never affected. Users can dismiss to continue on mobile.
  */
 export function LandscapeOverlay() {
   const [show, setShow] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
     const check = () => {
+      if (dismissed) {
+        setShow(false);
+        return;
+      }
       const isTouchDevice =
         "ontouchstart" in window || navigator.maxTouchPoints > 0;
       const isSmallScreen = window.innerWidth < 1024;
       const isPortrait = window.matchMedia("(orientation: portrait)").matches;
-
       setShow(isTouchDevice && isSmallScreen && isPortrait);
     };
 
     check();
-
     window.addEventListener("resize", check);
     window.addEventListener("orientationchange", check);
-
     return () => {
       window.removeEventListener("resize", check);
       window.removeEventListener("orientationchange", check);
     };
-  }, []);
+  }, [dismissed]);
 
   if (!show) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] bg-[#0A0705] flex flex-col items-center justify-center text-center px-8">
-      {/* Subtle background pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-1/4 left-1/4 w-px h-32 bg-[#D96B4A]" />
-        <div className="absolute top-1/4 left-1/4 w-32 h-px bg-[#D96B4A]" />
-        <div className="absolute bottom-1/4 right-1/4 w-px h-32 bg-[#D96B4A]" />
-        <div className="absolute bottom-1/4 right-1/4 w-32 h-px bg-[#D96B4A]" />
+    <div className="fixed inset-0 z-100 bg-[#0A0705] flex flex-col items-center justify-center text-center px-10 select-none">
+      {/* Decorative background lines */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-[12%] left-[8%] w-px h-36 bg-[#D96B4A] opacity-[0.04]" />
+        <div className="absolute top-[12%] left-[8%] w-36 h-px bg-[#D96B4A] opacity-[0.04]" />
+        <div className="absolute bottom-[12%] right-[8%] w-px h-36 bg-[#D96B4A] opacity-[0.04]" />
+        <div className="absolute bottom-[12%] right-[8%] w-36 h-px bg-[#D96B4A] opacity-[0.04]" />
+        <div className="absolute top-[50%] left-[6%] w-px h-16 bg-[#D96B4A] opacity-[0.03]" />
+        <div className="absolute top-[50%] right-[6%] w-px h-16 bg-[#D96B4A] opacity-[0.03]" />
       </div>
 
-      {/* Phone icon container with corner brackets */}
-      <div className="relative p-8 mb-8">
-        {/* Corner brackets */}
-        <div className="absolute top-0 left-0 w-4 h-4 border-l border-t border-gray-700" />
-        <div className="absolute top-0 right-0 w-4 h-4 border-r border-t border-gray-700" />
-        <div className="absolute bottom-0 left-0 w-4 h-4 border-l border-b border-gray-700" />
-        <div className="absolute bottom-0 right-0 w-4 h-4 border-r border-b border-gray-700" />
+      {/* Ambient glow */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full bg-[#D96B4A]/6 blur-3xl pointer-events-none" />
 
-        {/* Phone icon with portrait→landscape animation */}
-        <svg
-          width="48"
-          height="72"
-          viewBox="0 0 48 72"
-          fill="none"
-          className="text-gray-500 animate-[rotatePhone_3s_ease-in-out_infinite]"
-        >
-          <rect
-            x="2"
-            y="2"
-            width="44"
-            height="68"
-            rx="8"
-            stroke="currentColor"
-            strokeWidth="2"
-            fill="none"
-          />
-          <line
-            x1="16"
-            y1="60"
-            x2="32"
-            y2="60"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
-          <circle cx="24" cy="10" r="2" fill="#D96B4A" />
-        </svg>
+      {/* Decorative dots */}
+      <div className="absolute top-[22%] left-[18%] w-1 h-1 rounded-full bg-[#D96B4A] opacity-20 shadow-[0_0_6px_2px_#D96B4A]" />
+      <div className="absolute top-[35%] right-[14%] w-1 h-1 rounded-full bg-[#D96B4A] opacity-15 shadow-[0_0_6px_2px_#D96B4A]" />
+      <div className="absolute bottom-[28%] left-[12%] w-1 h-1 rounded-full bg-[#D96B4A] opacity-10 shadow-[0_0_6px_2px_#D96B4A]" />
+
+      {/* Monitor icon with framed box */}
+      <div className="relative mb-9">
+        <div className="relative p-7 border border-gray-800/50">
+          {/* Corner brackets */}
+          <div className="absolute top-0 left-0 w-5 h-5 border-l-2 border-t-2 border-[#D96B4A]/35" />
+          <div className="absolute top-0 right-0 w-5 h-5 border-r-2 border-t-2 border-[#D96B4A]/35" />
+          <div className="absolute bottom-0 left-0 w-5 h-5 border-l-2 border-b-2 border-[#D96B4A]/35" />
+          <div className="absolute bottom-0 right-0 w-5 h-5 border-r-2 border-b-2 border-[#D96B4A]/35" />
+
+          {/* Icon */}
+          <div className="relative">
+            <div className="absolute inset-0 blur-2xl bg-[#D96B4A]/20 scale-150 rounded-full" />
+            <Monitor
+              className="relative w-14 h-14 text-[#D96B4A] animate-pulse"
+              strokeWidth={1.25}
+            />
+          </div>
+        </div>
       </div>
 
-      {/* Label */}
-      <p className="text-[9px] tracking-[0.3em] text-[#D96B4A] uppercase font-medium mb-4">
-        ORIENTASI LANDSCAPE DIBUTUHKAN
-      </p>
+      {/* Eyebrow label */}
+      <div className="flex items-center gap-4 mb-5">
+        <div className="h-px w-10 bg-[#D96B4A]/20" />
+        <p className="text-[9px] tracking-[0.35em] text-[#D96B4A] uppercase font-medium">
+          REKOMENDASI PERANGKAT
+        </p>
+        <div className="h-px w-10 bg-[#D96B4A]/20" />
+      </div>
 
       {/* Heading */}
-      <h2 className="text-xl sm:text-2xl font-serif text-white mb-4 tracking-wide">
-        Putar Perangkat Anda
+      <h2 className="text-2xl sm:text-3xl font-serif text-[#F5F0EB] mb-4 leading-snug tracking-wide">
+        Untuk Pengalaman Terbaik,
+        <br />
+        <span className="text-white">Gunakan Desktop</span>
       </h2>
 
       {/* Description */}
-      <p className="text-[13px] text-gray-400 font-light max-w-xs leading-relaxed">
-        Halaman ini dioptimalkan untuk mode landscape.
-        Silakan putar perangkat Anda ke orientasi mendatar.
+      <p className="text-[13px] text-gray-500 font-light max-w-67.5 leading-relaxed mb-9">
+        Visual novel Adyatara dirancang untuk layar yang lebih luas. Buka di{" "}
+        <span className="text-[#9A8A7A] font-normal">
+          PC, laptop, atau komputer
+        </span>{" "}
+        agar setiap detail cerita dan visual dapat dinikmati secara penuh.
       </p>
 
-      {/* Bottom accent line */}
-      <div className="mt-10 flex items-center gap-3">
-        <div className="w-8 h-px bg-gray-800" />
-        <div className="w-1.5 h-1.5 rounded-full bg-[#D96B4A]/40" />
-        <div className="w-8 h-px bg-gray-800" />
+      {/* Separator */}
+      <div className="w-full max-w-50 h-px bg-linear-to-r from-transparent via-gray-800 to-transparent mb-7" />
+
+      {/* Landscape alternative */}
+      <div className="flex items-center gap-2.5 mb-9 text-gray-700">
+        <RotateCcw className="w-3.5 h-3.5 shrink-0" />
+        <p className="text-[11px] leading-snug">
+          Atau putar perangkat ke{" "}
+          <span className="text-gray-500">mode landscape</span>
+        </p>
       </div>
 
-      <style>{`
-        @keyframes rotatePhone {
-          0%, 100% { transform: rotate(0deg); }
-          25% { transform: rotate(90deg); }
-          75% { transform: rotate(90deg); }
-        }
-      `}</style>
+      {/* Dismiss button */}
+      <button
+        onClick={() => setDismissed(true)}
+        className="group flex items-center gap-1.5 text-[10px] tracking-[0.2em] uppercase text-gray-700 hover:text-gray-400 transition-colors duration-300 font-medium"
+      >
+        <span>Tetap lanjutkan di sini</span>
+        <span className="transition-transform duration-300 group-hover:translate-x-0.5">
+          →
+        </span>
+      </button>
     </div>
   );
 }
