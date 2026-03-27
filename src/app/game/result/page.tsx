@@ -112,8 +112,8 @@ function ResultPageContent() {
           className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center items-center w-full max-w-md"
         >
           <Link
-            href="/dashboard"
-            className="w-full text-center py-2.5 sm:py-3 md:py-4 px-6 sm:px-8 bg-[#D96B4A] text-white tracking-widest text-[9px] sm:text-[10px] md:text-xs font-semibold hover:bg-[#E86B52] transition-colors"
+            href="/explore"
+            className="w-full text-center py-4 px-8 bg-[#D96B4A] text-white tracking-widest text-xs font-semibold hover:bg-[#E86B52] transition-colors"
           >
             KEMBALI KE PETA
           </Link>
