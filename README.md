@@ -615,9 +615,3 @@ Pastikan untuk:
 - Menjalankan `npm run lint` sebelum commit
 - Mengikuti konvensi penamaan di `AGENTS.md`
 - Tidak mengcommit file `.env`
-
----
-
-## Lisensi
-
-Proyek ini bersifat privat.
